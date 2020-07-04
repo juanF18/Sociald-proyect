@@ -18,6 +18,8 @@ import {
 } from '@loopback/rest';
 import {Person, User} from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
+import { service } from '@loopback/core';
+import { CryptingService } from '../services';
 
 export class PersonController {
   constructor(
@@ -25,6 +27,8 @@ export class PersonController {
     public personRepository : PersonRepository,
     @repository(UserRepository)
     public userRepository : UserRepository,
+    @service(CryptingService)
+    public cryptingService: CryptingService
   ) {}
 
   @post('/person', {
@@ -50,9 +54,11 @@ export class PersonController {
     const {password, ...personBody} = body;
     const newPerson:Person = await this.personRepository.create(personBody);
 
+    const encryptedPassword = this.cryptingService.getDoubledMd5Password(password);
+
     const newUserData = {
       username: newPerson.email,
-      password: password,
+      password: encryptedPassword,
       role: "person"
     }
 
