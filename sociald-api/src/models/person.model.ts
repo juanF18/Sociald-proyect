@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {User} from './user.model';
 
 @model()
 export class Person extends Entity {
@@ -43,6 +44,9 @@ export class Person extends Entity {
     type: 'string',
   })
   profilPicPath?: string;
+
+  @hasOne(() => User)
+  user: User;
 
   constructor(data?: Partial<Person>) {
     super(data);
