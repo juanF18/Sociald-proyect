@@ -16,13 +16,15 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Person} from '../models';
-import {PersonRepository} from '../repositories';
+import {Person, User} from '../models';
+import {PersonRepository, UserRepository} from '../repositories';
 
 export class PersonController {
   constructor(
     @repository(PersonRepository)
     public personRepository : PersonRepository,
+    @repository(UserRepository)
+    public userRepository : UserRepository,
   ) {}
 
   @post('/person', {
@@ -37,16 +39,26 @@ export class PersonController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Person, {
-            title: 'NewPerson',
-            exclude: ['id'],
-          }),
+          schema: {
+            required: ['code', 'name', 'lastname', 'email', 'password']
+          },
         },
       },
     })
-    person: Omit<Person, 'id'>,
+    body: any,
   ): Promise<Person> {
-    return this.personRepository.create(person);
+    const {password, ...personBody} = body;
+    const newPerson:Person = await this.personRepository.create(personBody);
+
+    const newUserData = {
+      username: newPerson.email,
+      password: password,
+      role: "person"
+    }
+
+    const newUser: Promise<User> = this.personRepository.user(newPerson.id).create(newUserData);
+
+    return newPerson;
   }
 
   @get('/person/count', {
