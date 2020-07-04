@@ -13,7 +13,7 @@ export class PublicationRequest extends Entity {
     type: 'string',
     default: 'request message',
   })
-  messages?: string;
+  message?: string;
 
 
   constructor(data?: Partial<PublicationRequest>) {
