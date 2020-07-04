@@ -35,7 +35,7 @@ export class Company extends Entity {
 
   @property({
     type: 'number',
-    default: 000000,
+    default: 0,
   })
   postalCode?: number;
 
