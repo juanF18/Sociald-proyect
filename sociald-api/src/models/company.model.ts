@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne, hasMany} from '@loopback/repository';
+import {User} from './user.model';
+import {PublicationRequest} from './publication-request.model';
 
 @model()
 export class Company extends Entity {
@@ -44,6 +46,11 @@ export class Company extends Entity {
   })
   profilPicPath?: string;
 
+  @hasOne(() => User)
+  user: User;
+
+  @hasMany(() => PublicationRequest)
+  publicationRequests: PublicationRequest[];
 
   constructor(data?: Partial<Company>) {
     super(data);

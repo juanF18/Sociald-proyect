@@ -1,4 +1,7 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import {Person} from './person.model';
+import {PublicationRequest} from './publication-request.model';
+import {Category} from './category.model';
 
 @model()
 export class Publication extends Entity {
@@ -33,6 +36,14 @@ export class Publication extends Entity {
   })
   status?: boolean;
 
+  @belongsTo(() => Person)
+  personId: string;
+
+  @hasMany(() => PublicationRequest)
+  publicationRequests: PublicationRequest[];
+
+  @hasMany(() => Category)
+  categories: Category[];
 
   constructor(data?: Partial<Publication>) {
     super(data);
