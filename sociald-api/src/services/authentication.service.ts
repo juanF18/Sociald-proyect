@@ -5,6 +5,9 @@ import { User } from '../models';
 import { CryptingService } from './crypting.service';
 import * as jwt from 'jsonwebtoken';
 
+
+const jwt_secret_key = "IDONTKNOWYOU";
+
 @bind({scope: BindingScope.TRANSIENT})
 export class AuthenticationService {
   constructor(
@@ -39,7 +42,6 @@ export class AuthenticationService {
 
   async generateToken(user: User){
     let expiration = Math.floor((Date.now()/1000) * 3600);
-    const jwt_secret_key = "IDONTKNOWYOU";
     let token = jwt.sign(
       {
         exp: expiration,
@@ -52,5 +54,14 @@ export class AuthenticationService {
       },jwt_secret_key);
 
     return token;
+  }
+
+  async verifyToken(token: string){
+    try{
+      let data = jwt.verify(token, jwt_secret_key);
+      return data;
+    }catch(Error){
+      return false;
+    }
   }
 }
