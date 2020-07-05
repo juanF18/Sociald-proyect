@@ -1,5 +1,7 @@
-import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Entity, model, property, hasOne, hasMany} from '@loopback/repository';
 import {User} from './user.model';
+import {PersonSkill} from './person-skill.model';
+import {Publication} from './publication.model';
 
 @model()
 export class Person extends Entity {
@@ -47,6 +49,12 @@ export class Person extends Entity {
 
   @hasOne(() => User)
   user: User;
+
+  @hasMany(() => PersonSkill)
+  personSkills: PersonSkill[];
+
+  @hasMany(() => Publication)
+  publications: Publication[];
 
   constructor(data?: Partial<Person>) {
     super(data);
