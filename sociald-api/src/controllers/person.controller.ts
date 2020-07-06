@@ -44,6 +44,7 @@ export class PersonController {
       content: {
         'application/json': {
           schema: {
+            // We just require one more param(password) to create the relation
             required: ['code', 'name', 'lastname', 'email', 'password']
           },
         },
@@ -51,17 +52,23 @@ export class PersonController {
     })
     body: any,
   ): Promise<Person> {
+    // Separe the password of the rest of the body
     const {password, ...personBody} = body;
+
+    // Create the person
     const newPerson:Person = await this.personRepository.create(personBody);
 
+    // Encrypt the password two times using our Crypting Service
     const encryptedPassword = this.cryptingService.getDoubledMd5Password(password);
 
+    // Prepare the data of the user with the password encrypted
     const newUserData = {
       username: newPerson.email,
       password: encryptedPassword,
       role: "person"
     }
 
+    // Create the user taking advantage of the relation 1to1 of the person
     const newUser: Promise<User> = this.personRepository.user(newPerson.id).create(newUserData);
 
     return newPerson;

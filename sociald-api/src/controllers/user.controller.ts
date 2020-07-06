@@ -31,8 +31,10 @@ export class UserController {
   async login(
     @requestBody() credentials: Credentials
   ): Promise<object>{
+    // Use the authService to identify the params credentials
     const authResponse = await this.authenticationService.identify(credentials.username, credentials.password);
 
+    // If the user is identified then generate the token with our auth service
     if(authResponse){
       let tk = await this.authenticationService.generateToken(authResponse);
 
