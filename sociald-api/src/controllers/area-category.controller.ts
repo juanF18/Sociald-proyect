@@ -15,16 +15,13 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  Area,
-  Category,
-} from '../models';
+import {Area, Category} from '../models';
 import {AreaRepository} from '../repositories';
 
 export class AreaCategoryController {
   constructor(
     @repository(AreaRepository) protected areaRepository: AreaRepository,
-  ) { }
+  ) {}
 
   @get('/areas/{id}/categories', {
     responses: {
@@ -61,11 +58,12 @@ export class AreaCategoryController {
           schema: getModelSchemaRef(Category, {
             title: 'NewCategoryInArea',
             exclude: ['id'],
-            optional: ['areaId']
+            optional: ['areaId'],
           }),
         },
       },
-    }) category: Omit<Category, 'id'>,
+    })
+    category: Omit<Category, 'id'>,
   ): Promise<Category> {
     return this.areaRepository.categories(id).create(category);
   }
@@ -88,7 +86,8 @@ export class AreaCategoryController {
       },
     })
     category: Partial<Category>,
-    @param.query.object('where', getWhereSchemaFor(Category)) where?: Where<Category>,
+    @param.query.object('where', getWhereSchemaFor(Category))
+    where?: Where<Category>,
   ): Promise<Count> {
     return this.areaRepository.categories(id).patch(category, where);
   }
@@ -103,7 +102,8 @@ export class AreaCategoryController {
   })
   async delete(
     @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(Category)) where?: Where<Category>,
+    @param.query.object('where', getWhereSchemaFor(Category))
+    where?: Where<Category>,
   ): Promise<Count> {
     return this.areaRepository.categories(id).delete(where);
   }

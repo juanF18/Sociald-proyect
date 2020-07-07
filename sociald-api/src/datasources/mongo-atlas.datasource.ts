@@ -4,13 +4,14 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'mongoAtlas',
   connector: 'mongodb',
-  url: 'mongodb+srv://dbAdmin:RkQtw1qY1GzCjNpI@ucaldascluster.g2knh.mongodb.net/sociald?retryWrites=true&w=majority',
+  url:
+    'mongodb+srv://dbAdmin:RkQtw1qY1GzCjNpI@ucaldascluster.g2knh.mongodb.net/sociald?retryWrites=true&w=majority',
   host: 'ucaldascluster.g2knh.mongodb.net',
-  port: 0,
+  port: 27017,
   user: 'dbAdmin',
   password: 'RkQtw1qY1GzCjNpI',
   database: 'sociald',
-  useNewUrlParser: true
+  useNewUrlParser: true,
 };
 
 // Observe application's life cycle to disconnect the datasource when
