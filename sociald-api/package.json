@@ -70,11 +70,11 @@
     "@types/crypto-js": "^3.1.47",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^10.17.26",
-    "@types/passport": "^1.0.3",
+    "@types/passport": "^1.0.4",
     "@types/passport-http": "^0.3.8",
     "@types/passport-http-bearer": "^1.0.35",
-    "eslint": "^7.3.1",
+    "eslint": "^7.4.0",
     "source-map-support": "^0.5.19",
-    "typescript": "~3.9.5"
+    "typescript": "^3.9.6"
   }
 }
