@@ -19,3 +19,4 @@ export * from './area-category.controller';
 export * from './category-area.controller';
 export * from './company.controller';
 export * from './skill.controller';
+export * from './request-publication.controller';
