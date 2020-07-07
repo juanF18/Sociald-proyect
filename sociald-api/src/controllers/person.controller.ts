@@ -1,3 +1,4 @@
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -7,28 +8,27 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
-import {Person, User} from '../models';
+import {EmailNotification, Person, User} from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
-import { service } from '@loopback/core';
-import { CryptingService } from '../services';
+import {CryptingService} from '../services';
 
 export class PersonController {
   constructor(
     @repository(PersonRepository)
-    public personRepository : PersonRepository,
+    public personRepository: PersonRepository,
     @repository(UserRepository)
-    public userRepository : UserRepository,
+    public userRepository: UserRepository,
     @service(CryptingService)
-    public cryptingService: CryptingService
+    public cryptingService: CryptingService,
   ) {}
 
   @post('/person', {
@@ -45,7 +45,7 @@ export class PersonController {
         'application/json': {
           schema: {
             // We just require one more param(password) to create the relation
-            required: ['code', 'name', 'lastname', 'email', 'password']
+            required: ['code', 'name', 'lastname', 'email', 'password'],
           },
         },
       },
@@ -56,20 +56,31 @@ export class PersonController {
     const {password, ...personBody} = body;
 
     // Create the person
-    const newPerson:Person = await this.personRepository.create(personBody);
+    const newPerson: Person = await this.personRepository.create(personBody);
 
     // Encrypt the password two times using our Crypting Service
-    const encryptedPassword = this.cryptingService.getDoubledMd5Password(password);
+    const encryptedPassword = this.cryptingService.getDoubledMd5Password(
+      password,
+    );
 
     // Prepare the data of the user with the password encrypted
     const newUserData = {
       username: newPerson.email,
       password: encryptedPassword,
-      role: "person"
-    }
+      role: 'person',
+    };
 
     // Create the user taking advantage of the relation 1to1 of the person
-    const newUser: Promise<User> = this.personRepository.user(newPerson.id).create(newUserData);
+    const newUser: Promise<User> = this.personRepository
+      .user(newPerson.id)
+      .create(newUserData);
+
+    let emailData: EmailNotification = new EmailNotification({
+      subject: 'Welcome to SocialD',
+      body: 'Bienvenid@ a la nueva pagina de reclutamiento de programadores',
+      text: `Hola <strong>${newPerson.name}</strong> espereamos que te guste nuestra pagina`,
+      to: newPerson.email,
+    });
 
     return newPerson;
   }
@@ -82,9 +93,7 @@ export class PersonController {
       },
     },
   })
-  async count(
-    @param.where(Person) where?: Where<Person>,
-  ): Promise<Count> {
+  async count(@param.where(Person) where?: Where<Person>): Promise<Count> {
     return this.personRepository.count(where);
   }
 
@@ -103,9 +112,7 @@ export class PersonController {
       },
     },
   })
-  async find(
-    @param.filter(Person) filter?: Filter<Person>,
-  ): Promise<Person[]> {
+  async find(@param.filter(Person) filter?: Filter<Person>): Promise<Person[]> {
     return this.personRepository.find(filter);
   }
 
@@ -145,7 +152,8 @@ export class PersonController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Person, {exclude: 'where'}) filter?: FilterExcludingWhere<Person>
+    @param.filter(Person, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Person>,
   ): Promise<Person> {
     return this.personRepository.findById(id, filter);
   }
