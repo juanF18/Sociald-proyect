@@ -28,7 +28,7 @@ export class NotificationService {
 */
   async EmailNotification(notification: EmailNotification): Promise<boolean> {
     try {
-      sgMail.setApiKey();
+      sgMail.setApiKey(ND.SG_API_KEY);
       const msg = {
         to: notification.to,
         from: ND.SG_FROM,
