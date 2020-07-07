@@ -19,7 +19,8 @@ import {
 } from '@loopback/rest';
 import {EmailNotification, Person, User} from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
-import {CryptingService} from '../services';
+import {CryptingService, NotificationService} from '../services';
+import { send } from 'process';
 
 export class PersonController {
   constructor(
@@ -81,6 +82,12 @@ export class PersonController {
       text: `Hola <strong>${newPerson.name}</strong> espereamos que te guste nuestra pagina`,
       to: newPerson.email,
     });
+
+    let sendEmail: boolean =await new NotificationService().EmailNotification(emailData);
+
+    if(sendEmail){
+      console.log("Message send!");
+    }
 
     return newPerson;
   }
