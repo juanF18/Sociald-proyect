@@ -8,3 +8,4 @@ export * from './publication-request.model';
 export * from './publication.model';
 export * from './skill.model';
 export * from './user.model';
+export * from './sms-notification.model';

@@ -1,10 +1,9 @@
 import {NotificationDatasource as ND} from '../datasources/notification.datasource';
-import {EmailNotification} from '../models';
-//const twilio = require('twilio');
+import {EmailNotification, SmsNotification} from '../models';
+const twilio = require('twilio');
 const sgMail = require('@sendgrid/mail');
 
 export class NotificationService {
-  /*
   async SmsNotification(notificartion: SmsNotification): Promise<boolean> {
     try {
       const accountSid = ND.TWILIO_SID;
@@ -25,7 +24,7 @@ export class NotificationService {
       return false;
     }
   }
-*/
+
   async EmailNotification(notification: EmailNotification): Promise<boolean> {
     try {
       sgMail.setApiKey(ND.SG_API_KEY);
