@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "socialdNG"
+    }
+  },
+  "defaultProject": "socialdNG",
+  "cli": {
+    "analytics": false
+  }
 }
