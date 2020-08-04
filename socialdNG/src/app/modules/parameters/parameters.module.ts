@@ -9,10 +9,6 @@ import { CategoryRemoveComponent } from './category/category-remove/category-rem
 import { AreaCreationComponent } from './area/area-creation/area-creation.component';
 import { AreaListComponent } from './area/area-list/area-list.component';
 import { AreaEditionComponent } from './area/area-edition/area-edition.component';
-import { PublicationCreateComponent } from './publication/publication-create/publication-create.component';
-import { PublicationListComponent } from './publication/publication-list/publication-list.component';
-import { PublicationRemoveComponent } from './publication/publication-remove/publication-remove.component';
-import { PublicationEditionComponent } from './publication/publication-edition/publication-edition.component';
 import { SkillCreationComponent } from './skill/skill-creation/skill-creation.component';
 import { SkillListComponent } from './skill/skill-list/skill-list.component';
 import { SkillRemoveComponent } from './skill/skill-remove/skill-remove.component';
@@ -24,7 +20,7 @@ import { PublicationRequestEditionComponent } from './publication-request/public
 
 
 @NgModule({
-  declarations: [CategoryCreationComponent, CategoryEditionComponent, CategoryListComponent, CategoryRemoveComponent, AreaCreationComponent, AreaListComponent, AreaEditionComponent, PublicationCreateComponent, PublicationListComponent, PublicationRemoveComponent, PublicationEditionComponent, SkillCreationComponent, SkillListComponent, SkillRemoveComponent, SkillEditionComponent, PublicationRequestCreationComponent, PublicationRequestRemoveComponent, PublicationRequestListComponent, PublicationRequestEditionComponent],
+  declarations: [CategoryCreationComponent, CategoryEditionComponent, CategoryListComponent, CategoryRemoveComponent, AreaCreationComponent, AreaListComponent, AreaEditionComponent, SkillCreationComponent, SkillListComponent, SkillRemoveComponent, SkillEditionComponent, PublicationRequestCreationComponent, PublicationRequestRemoveComponent, PublicationRequestListComponent, PublicationRequestEditionComponent],
   imports: [
     CommonModule,
     ParametersRoutingModule

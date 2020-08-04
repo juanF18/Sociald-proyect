@@ -7,10 +7,6 @@ import { CategoryCreationComponent } from './category/category-creation/category
 import { CategoryRemoveComponent } from './category/category-remove/category-remove.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { CategoryEditionComponent } from './category/category-edition/category-edition.component';
-import { PublicationCreateComponent } from './publication/publication-create/publication-create.component';
-import { PublicationRemoveComponent } from './publication/publication-remove/publication-remove.component';
-import { PublicationListComponent } from './publication/publication-list/publication-list.component';
-import { PublicationEditionComponent } from './publication/publication-edition/publication-edition.component';
 import { PublicationRequestCreationComponent } from './publication-request/publication-request-creation/publication-request-creation.component';
 import { PublicationRequestListComponent } from './publication-request/publication-request-list/publication-request-list.component';
 import { PublicationRequestRemoveComponent } from './publication-request/publication-request-remove/publication-request-remove.component';
@@ -52,22 +48,7 @@ const routes: Routes = [
     component:CategoryEditionComponent
   },
   /**publication-path */
-  {
-    path:'publication-creation',
-    component: PublicationCreateComponent
-  },
-  {
-    path:'publication-remove',
-    component: PublicationRemoveComponent
-  },
-  {
-    path:'publication-list',
-    component: PublicationListComponent
-  },
-  {
-    path:'publication-edition',
-    component: PublicationEditionComponent
-  },
+  
   /**publication-reques path */
   {
     path:'publication-reques-creation',
