@@ -8,6 +8,7 @@ import { SideMenuComponent } from './public/master-page/side-menu/side-menu.comp
 import { HeroComponent } from './public/master-page/hero/hero.component';
 import { FooterComponent } from './public/master-page/footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavBarComponent } from './public/master-page/nav-bar/nav-bar.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SideMenuComponent,
     HeroComponent,
     FooterComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

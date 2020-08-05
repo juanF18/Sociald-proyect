@@ -16,8 +16,8 @@ const routes: Routes = [
     loadChildren: () => import('./modules/parameters/parameters.module').then(m => m.ParametersModule)
   },
   {
-    path:'person',
-    loadChildren: () => import('./modules/person/person.module').then(m => m.PersonModule)
+    path:'publication',
+    loadChildren: () => import('./modules/publication/publication.module').then(m => m.PublicationModule)
   },
   {
     path:'person',
