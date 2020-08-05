@@ -3,8 +3,10 @@
   <div class="nav-wrapper teal">
     <a href="#" class="brand-logo">SocialD</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a routerLink="/security/login">Login</a></li>
-      <li><a routerLink="/person/register">Register</a></li>
+      <li *ngIf="!isLogged"><a routerLink="/security/login">Login</a></li>
+      <li *ngIf="isLogged"><a routerLink="/security/logout">Logout</a></li>
+      <li *ngIf="isLogged"><a routerLink="/security/change-password">Change Password</a></li>
+      <li *ngIf="!isLogged"><a routerLink="/person/register">Register</a></li>
       <li><a routerLink="/general/about-us">About us</a></li>
     </ul>
   </div>
