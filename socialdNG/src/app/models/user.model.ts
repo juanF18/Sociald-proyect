@@ -3,5 +3,5 @@ export class UserModel{
     username:string;
     password?:string;
     personId?:string;
-    role:number;
+    role?:number;
 }
