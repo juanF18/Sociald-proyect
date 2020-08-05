@@ -8,7 +8,7 @@ import { HeroComponent } from './public/master-page/hero/hero.component';
 import { FooterComponent } from './public/master-page/footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavBarComponent } from './public/master-page/nav-bar/nav-bar.component';
-
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { NavBarComponent } from './public/master-page/nav-bar/nav-bar.component'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

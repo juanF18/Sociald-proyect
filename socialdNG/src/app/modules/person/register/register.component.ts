@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsConfig as fconfig } from "../../../config/forms-config";
+import { PersonService } from "../../../services/person.service";
+import { PersonModel } from 'src/app/models/person.model';
 declare const showMessage: any;
 @Component({
   selector: 'app-register',
@@ -15,7 +17,7 @@ export class RegisterComponent implements OnInit {
   phoneMinLength = fconfig.PHONE_MIN_LENGTH;
   phoneMaxLength = fconfig.PHONE_MAX_LENGTH;
   passwordMinLength = fconfig.PASSWORD_MIN_LENGTH;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private service: PersonService) {}
 
   ngOnInit(): void {
     this.FormBuilding();
@@ -36,12 +38,28 @@ export class RegisterComponent implements OnInit {
     if (this.fgValidator.invalid) {
       showMessage('Formulario invalido')
     }else{
-      showMessage('Registrando')
-      return false;
-    }
-    
+      //showMessage('Registrando')
+      let model = this.getPersonData();
+      this.service.PersonRegistering(model).subscribe(
+        data =>{
+          showMessage("Registro guardado con exito, su contraseña esta en el correo.")
+      },
+      error =>{
+        showMessage("Error al registrar.")
+      });
+    } 
   }
 
+  getPersonData(): PersonModel{
+    let model = new PersonModel();
+    model.code = this.fgv.code.value;
+    model.name = this.fgv.name.value;
+    model.lastname = this.fgv.lastname.value;
+    model.email = this.fgv.email.value;
+    model.phone = this.fgv.phone.value;
+    model.password = this.fgv.password.value;
+    return model;
+  }
   get fgv() {
     return this.fgValidator.controls;
   }
