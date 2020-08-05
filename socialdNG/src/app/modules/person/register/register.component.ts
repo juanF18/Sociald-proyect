@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormsConfig as fconfig } from "../../../config/forms-config";
 declare const showMessage: any;
 @Component({
   selector: 'app-register',
@@ -8,6 +9,12 @@ declare const showMessage: any;
 })
 export class RegisterComponent implements OnInit {
   fgValidator: FormGroup;
+  codeMinLength = fconfig.CODE_MIN_LENGTH;
+  nameMinLength = fconfig.NAME_MIN_LENGTH;
+  lastnameMinLength = fconfig.LASTNAME_MIN_LENGTH;
+  phoneMinLength = fconfig.PHONE_MIN_LENGTH;
+  phoneMaxLength = fconfig.PHONE_MAX_LENGTH;
+  passwordMinLength = fconfig.PASSWORD_MIN_LENGTH;
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -16,13 +23,12 @@ export class RegisterComponent implements OnInit {
 
   FormBuilding() {
     this.fgValidator = this.fb.group({
-      code: ['', [Validators.required, Validators.minLength(7)]],
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      lastname: ['', [Validators.required, Validators.minLength(2)]],
+      code: ['', [Validators.required, Validators.minLength(this.codeMinLength)]],
+      name: ['', [Validators.required, Validators.minLength(this.nameMinLength)]],
+      lastname: ['', [Validators.required, Validators.minLength(this.lastnameMinLength)]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['',[Validators.required, Validators.minLength(12), Validators.maxLength(15),]],
-      password: ['', [Validators.required, Validators.minLength(12)]],
-      
+      phone: ['',[Validators.required, Validators.minLength(this.phoneMinLength), Validators.maxLength(this.phoneMaxLength),]],
+      password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]],
     });
   }
 

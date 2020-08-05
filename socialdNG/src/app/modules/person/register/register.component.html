@@ -1,41 +1,89 @@
 <div class="col s12 z-depth-6 card-panel">
-    <form [formGroup]="fgValidator" class="col s4" id="reg-form" >
+    <form [formGroup]="fgValidator" class="col s4" id="reg-form">
         <div class="row">
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="FirstName" formControlName="name" type="text" class="validate" required>
-                <label for="FirstName">First Name</label>
-                <div class="warning-validator"></div>
+                <input id="name" formControlName="name" type="text" class="validate" required>
+                <label for="name">First Name</label>
+                <div class="warning-validator" *ngIf="fgv.name.errors && (fgv.name.dirty || fgv.name.touched)">
+                    <strong *ngIf="fgv.name.errors.required">
+                        This field is required.
+                    </strong>
+                    <strong *ngIf="fgv.name.errors.minlength">
+                        This field must be at least {{nameMinLength}} long.
+                    </strong>
+                </div>
             </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="LastName" type="text" formControlName="lastname" class="validate" required>
-                <label for="LastName">Last Name</label>
+                <input id="lastname" type="text" formControlName="lastname" class="validate" required>
+                <label for="lastname">Last Name</label>
+                <div class="warning-validator" *ngIf="fgv.lastname.errors && (fgv.lastname.dirty || fgv.lastname.touched)">
+                    <strong *ngIf="fgv.lastname.errors.required">
+                        This field is required.
+                    </strong>
+                    <strong *ngIf="fgv.lastname.errors.minlength">
+                        This field must be at least {{lastnameMinLength}} long.
+                    </strong>
+                </div>
             </div>
             <div class="input-field col s4">
                 <i class="material-icons prefix">perm_identity</i>
-                <input id="Document" formControlName="code" type="text">
-                <label for="Document">Document</label>
+                <input id="code" formControlName="code" type="text" class="validate" required>
+                <label for="code">Document</label>
+                <div class="warning-validator" *ngIf="fgv.code.errors && (fgv.code.dirty || fgv.code.touched)">
+                    <strong *ngIf="fgv.code.errors.required">
+                        This field is required.
+                    </strong>
+                    <strong *ngIf="fgv.code.errors.minlength">
+                        This field must be at least {{codeMinLength}} long.
+                    </strong>
+                </div>
             </div>
             <div class="input-field col s4">
                 <i class="material-icons prefix">phone</i>
-                <input id="Phone" type="text" formControlName="phone" class="validate" required>
-                <label for="Phone">Phone</label>
+                <input id="phone" type="text" formControlName="phone" class="validate" required>
+                <label for="phone">Phone</label>
+                <div class="warning-validator" *ngIf="fgv.phone.errors && (fgv.phone.dirty || fgv.phone.touched)">
+                    <strong *ngIf="fgv.phone.errors.required">
+                        This field is required.
+                    </strong>
+                    <strong *ngIf="fgv.phone.errors.minlength">
+                        This field must be at least {{phoneMinLength}} long.
+                    </strong>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">email</i>
-                <input id="Email" type="email" formControlName="email" class="validate" required>
-                <label for="Email">Email</label>
+                <input id="email" type="email" formControlName="email" class="validate" required>
+                <label for="email">Email</label>
+                <div class="warning-validator" *ngIf="fgv.email.errors && (fgv.email.dirty || fgv.email.touched)">
+                    <strong *ngIf="fgv.email.errors.required">
+                        This field is required.
+                    </strong>
+                    <strong *ngIf="fgv.email.errors.email">
+                        This has to be a valid email.
+                    </strong>
+                </div>
             </div>
             <div class="input-field col s4">
                 <i class="material-icons prefix">security</i>
-                <input id="Password" type="password" formControlName="password" class="validate" required>
-                <label for="Password">Password</label>
+                <input id="password" type="password" formControlName="password" class="validate" required>
+                <label for="password">Password</label>
+                <div class="warning-validator" *ngIf="fgv.password.errors && (fgv.password.dirty || fgv.password.touched)">
+                    <strong *ngIf="fgv.password.errors.required">
+                        This field is required.
+                    </strong>
+                    <strong *ngIf="fgv.password.errors.minlength">
+                        This field must be at least {{passwordMinLength}} long.
+                    </strong>
+                </div>
             </div>
             <div class="input-field col s12 center">
-                <button (click)="PersonRegisterFN()" type="submit" class="waves-effect waves-light btn"><i class="material-icons right">send</i>Register</button>
+                <button (click)="PersonRegisterFN()" type="submit" class="waves-effect waves-light btn"><i
+                        class="material-icons right">send</i>Register</button>
             </div>
         </div>
     </form>
