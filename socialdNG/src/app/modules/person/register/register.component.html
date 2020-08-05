@@ -1,34 +1,41 @@
 <div class="col s12 z-depth-6 card-panel">
-    <form class="col s4">
+    <form [formGroup]="fgValidator" class="col s4" id="reg-form" >
         <div class="row">
-            <div class="input-field col s4">
-                <input id="FirstName" type="text" class="validate" required>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="FirstName" formControlName="name" type="text" class="validate" required>
                 <label for="FirstName">First Name</label>
+                <div class="warning-validator"></div>
             </div>
-            <div class="input-field col s4">
-                <input id="LastName" type="text" class="validate" required>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="LastName" type="text" formControlName="lastname" class="validate" required>
                 <label for="LastName">Last Name</label>
             </div>
             <div class="input-field col s4">
-                <input id="Document" type="text">
+                <i class="material-icons prefix">perm_identity</i>
+                <input id="Document" formControlName="code" type="text">
                 <label for="Document">Document</label>
+            </div>
+            <div class="input-field col s4">
+                <i class="material-icons prefix">phone</i>
+                <input id="Phone" type="text" formControlName="phone" class="validate" required>
+                <label for="Phone">Phone</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s4">
-                <input id="Email" type="email" class="validate" required>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">email</i>
+                <input id="Email" type="email" formControlName="email" class="validate" required>
                 <label for="Email">Email</label>
             </div>
             <div class="input-field col s4">
-                <input id="Phone" type="text" class="validate" required>
-                <label for="Phone">Phone</label>
-            </div>
-            <div class="input-field col s4">
-                <input id="Password" type="password" class="validate" required>
+                <i class="material-icons prefix">security</i>
+                <input id="Password" type="password" formControlName="password" class="validate" required>
                 <label for="Password">Password</label>
             </div>
             <div class="input-field col s12 center">
-                <button type="submit" class="waves-effect waves-light btn">Submit</button>
+                <button (click)="PersonRegisterFN()" type="submit" class="waves-effect waves-light btn"><i class="material-icons right">send</i>Register</button>
             </div>
         </div>
     </form>

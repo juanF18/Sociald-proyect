@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { PersonRoutingModule } from './person-routing.module';
 import { RegisterComponent } from './register/register.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
   declarations: [RegisterComponent],
   imports: [
     CommonModule,
-    PersonRoutingModule
+    PersonRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class PersonModule { }

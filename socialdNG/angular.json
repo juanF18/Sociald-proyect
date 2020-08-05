@@ -29,7 +29,8 @@
             ],
             "scripts": [
               "node_modules/materialize-css/dist/js/materialize.js",
-              "src/assets/scripts/materialize-init.js"
+              "src/assets/scripts/materialize-init.js",
+              "src/assets/scripts/general-fuctions.js"
             ]
           },
           "configurations": {
