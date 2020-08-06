@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SecurityService } from 'src/app/services/security.service';
 import { Router } from '@angular/router';
-
+declare const initDropDown: any;
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',

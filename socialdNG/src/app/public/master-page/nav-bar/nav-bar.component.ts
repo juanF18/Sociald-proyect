@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SecurityService } from 'src/app/services/security.service';
-
+declare const initDropdow: any;
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',

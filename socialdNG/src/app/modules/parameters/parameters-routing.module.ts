@@ -47,23 +47,22 @@ const routes: Routes = [
     path:'category-edition',
     component:CategoryEditionComponent
   },
-  /**publication-path */
   
   /**publication-reques path */
   {
-    path:'publication-reques-creation',
+    path:'publication-request-creation',
     component:PublicationRequestCreationComponent
   },
   {
-    path:'publication-reques-list',
+    path:'publication-request-list',
     component:PublicationRequestListComponent
   },
   {
-    path:'publication-reques-remove',
+    path:'publication-request-remove',
     component:PublicationRequestRemoveComponent
   },
   {
-    path:'publication-reques-edition',
+    path:'publication-request-edition',
     component:PublicationRequestEditionComponent
   },
   /**skills path*/

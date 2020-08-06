@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/user.model';
 import { SecurityService } from '../../../services/security.service';
 declare const showMessage: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+ declare const initDropDown: any;
 
 @Component({
   selector: 'app-default',
@@ -10,6 +11,7 @@ export class DefaultComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    setTimeout(initDropDown(), 1000);
   }
 
 }
