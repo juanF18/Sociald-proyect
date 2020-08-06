@@ -20,7 +20,6 @@ import {
 import {EmailNotification, Person, User} from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
 import {CryptingService, NotificationService} from '../services';
-import { send } from 'process';
 
 export class PersonController {
   constructor(
@@ -79,14 +78,16 @@ export class PersonController {
     let emailData: EmailNotification = new EmailNotification({
       subject: 'Welcome to SocialD',
       body: 'Bienvenid@ a la nueva pagina de reclutamiento de programadores',
-      text: `Hola <strong>${newPerson.name}</strong> espereamos que te guste nuestra pagina`,
+      text: `Hola <strong>${newPerson.name}</strong> espereamos que te guste nuestra pagina recuerda que tu contrseña es ${password} `,
       to: newPerson.email,
     });
 
-    let sendEmail: boolean =await new NotificationService().EmailNotification(emailData);
+    let sendEmail: boolean = await new NotificationService().EmailNotification(
+      emailData,
+    );
 
-    if(sendEmail){
-      console.log("Message send!");
+    if (sendEmail) {
+      console.log('Message send!');
     }
 
     return newPerson;

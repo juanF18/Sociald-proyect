@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsConfig as fconfig } from "../../../config/forms-config";
 import { PersonService } from "../../../services/person.service";
 import { PersonModel } from 'src/app/models/person.model';
+import { Router } from '@angular/router';
 declare const showMessage: any;
 @Component({
   selector: 'app-register',
@@ -17,7 +18,10 @@ export class RegisterComponent implements OnInit {
   phoneMinLength = fconfig.PHONE_MIN_LENGTH;
   phoneMaxLength = fconfig.PHONE_MAX_LENGTH;
   passwordMinLength = fconfig.PASSWORD_MIN_LENGTH;
-  constructor(private fb: FormBuilder, private service: PersonService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private service: PersonService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.FormBuilding();
@@ -43,6 +47,7 @@ export class RegisterComponent implements OnInit {
       this.service.PersonRegistering(model).subscribe(
         data =>{
           showMessage("Registro guardado con exito, su contraseña esta en el correo.")
+          this.router.navigate(['/security/login'])
       },
       error =>{
         showMessage("Error al registrar.")
