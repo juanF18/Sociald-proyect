@@ -9,6 +9,9 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
+import { JWTAuthenticationComponent } from './jwt-authentication-component';
+import { UserServiceBindings } from './keys';
+import { MongoAtlasDataSource } from './datasources';
 
 export {ApplicationConfig};
 
@@ -29,6 +32,8 @@ export class SocialdApiApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+    this.component(JWTAuthenticationComponent);
+    // this.dataSource(MongoAtlasDataSource, UserServiceBindings.DATASOURCE_NAME);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
