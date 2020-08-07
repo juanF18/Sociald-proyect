@@ -23,3 +23,4 @@ export * from './request-publication.controller';
 export * from './category.controller';
 export * from './area.controller';
 export * from './publication-request.controller';
+export * from './publication.controller';
