@@ -13,5 +13,4 @@ function initDropdow(){
     var instances = M.Dropdown.init(elems, {});
     instances.open()
   });
-  ins
 }

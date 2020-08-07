@@ -11,7 +11,7 @@ export class DefaultComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    setTimeout(initDropDown(), 1000);
+    //setTimeout(initDropDown(), 1000);
   }
 
 }
