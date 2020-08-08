@@ -56,10 +56,6 @@ export class SecurityService {
       return false;
     }else{
       let data: UserModel = {
-        id:session.data.id,
-        personId: session.data.personId,
-        username: session.data.username,
-        role: session.data.role,
         token: session.token,
         isLogged: true
       };

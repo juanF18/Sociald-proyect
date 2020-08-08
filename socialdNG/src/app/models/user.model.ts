@@ -1,9 +1,9 @@
 export class UserModel {
   id?: string;
-  username: string;
+  email?: string;
   password?: string;
-  personId?: string;
   role?: string;
+  personId?: string;
   token?: string;
   isLogged: Boolean = false;
 }

@@ -19,8 +19,6 @@ export class SideMenuComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.service.getUserData().subscribe((data) => {
       this.isLogged = data.isLogged;
-      this.email = data.username;
-      this.role = data.role;
     });
   }
 }

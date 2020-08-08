@@ -6,10 +6,10 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">mail_outline</i>
-                    <input formControlName='username' class="validate" id="email" type="email" required>
+                    <input formControlName='email' class="validate" id="email" type="email" required>
                     <label for="email" data-error="wrong" data-success="right">Email</label>
                     <div class="warning-validator"
-                        *ngIf="fgv.username.errors && (fgv.username.dirty || fgv.username.touched)">
+                        *ngIf="fgv.email.errors && (fgv.email.dirty || fgv.email.touched)">
                         <strong>
                             This field is required.
                         </strong>

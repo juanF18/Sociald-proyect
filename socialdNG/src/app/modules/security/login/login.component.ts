@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   FormBuilding() {
     this.fgValidator = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
   }
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       let model = this.getLoginData();
       this.service.PersonLogin(model).subscribe(
         (data) => {
+          console.log(data)
           this.service.saveSessionData(data);
           this.router.navigate(['/home']);
         },
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
 
   getLoginData(): UserModel {
     let model = new UserModel();
-    model.username = this.fgv.username.value;
+    model.email = this.fgv.email.value;
     model.password = this.fgv.password.value;
     return model;
   }
