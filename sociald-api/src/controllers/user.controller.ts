@@ -16,7 +16,7 @@ class Credentials {
 }
 
 class PasswordResetData {
-  username: string;
+  email: string;
   type: number;
 }
 
@@ -57,65 +57,66 @@ export class UserController {
     }
   }
 
-  @post('/password-reset', {
-    responses: {
-      description: {
-        '200': {
-          description: 'reset for Users',
-        },
-      },
-    },
-  })
-  async reset(@requestBody() data: PasswordResetData): Promise<boolean> {
-    let randonPassword = await this.authenticationService.ResetPassword(
-      data.username,
-    );
-    let person = await this.personRepository.findOne({
-      where: {email: data.username},
-    });
-    if (randonPassword) {
-      //Send new passwor
-      //1. sms
-      //2. mail
-      switch (data.type) {
-        case 1:
-          if (person) {
-            let notification = new SmsNotification({
-              body: `Su nueva contraseña es ${randonPassword}`,
-              to: person.phone,
-            });
-            let sms = await new NotificationService().SmsNotification(
-              notification,
-            );
-            if (sms) {
-              console.log('SMS enviado');
-              return true;
-            }
-            throw new HttpErrors[400]('telefono no encontrado');
-          }
-        case 2:
-          if (person) {
-            let notification = new EmailNotification({
-              body: 'Cambio de contraseña',
-              text: `La contrseña generada es es <strong>${randonPassword}</strong>`,
-              to: person.email,
-              subject: 'Nueva contraseña',
-            });
-            let mail = await new NotificationService().EmailNotification(
-              notification,
-            );
-            if (mail) {
-              console.log('Email eviado');
-              return true;
-            }
-            throw new HttpErrors[400]('Email not found');
-          }
-          throw new HttpErrors[400]('Notificacion no soportada');
+  // @post('/password-reset', {
+  //   responses: {
+  //     description: {
+  //       '200': {
+  //         description: 'reset for Users',
+  //       },
+  //     },
+  //   },
+  // })
+  // async reset(@requestBody() data: PasswordResetData): Promise<boolean> {
+  //   let randonPassword = await this.authenticationService.ResetPassword(
+  //     data.email,
+  //   );
+  //   let person = await this.userRepository.findOne({
+  //     where: {email: data.email},
+  //   });
 
-        default:
-          throw new HttpErrors[400]('User not fount');
-      }
-    }
-    return false;
-  }
+  //   if (randonPassword) {
+  //     //Send new passwor
+  //     //1. sms
+  //     //2. mail
+  //     switch (data.type) {
+  //       case 1:
+  //         if (person) {
+  //           let notification = new SmsNotification({
+  //             body: `Su nueva contraseña es ${randonPassword}`,
+  //             to: person.phone,
+  //           });
+  //           let sms = await new NotificationService().SmsNotification(
+  //             notification,
+  //           );
+  //           if (sms) {
+  //             console.log('SMS enviado');
+  //             return true;
+  //           }
+  //           throw new HttpErrors[400]('telefono no encontrado');
+  //         }
+  //       case 2:
+  //         if (person) {
+  //           let notification = new EmailNotification({
+  //             body: 'Cambio de contraseña',
+  //             text: `La contrseña generada es es <strong>${randonPassword}</strong>`,
+  //             to: person.email,
+  //             subject: 'Nueva contraseña',
+  //           });
+  //           let mail = await new NotificationService().EmailNotification(
+  //             notification,
+  //           );
+  //           if (mail) {
+  //             console.log('Email eviado');
+  //             return true;
+  //           }
+  //           throw new HttpErrors[400]('Email not found');
+  //         }
+  //         throw new HttpErrors[400]('Notificacion no soportada');
+
+  //       default:
+  //         throw new HttpErrors[400]('User not fount');
+  //     }
+  //   }
+  //   return false;
+  // }
 }
