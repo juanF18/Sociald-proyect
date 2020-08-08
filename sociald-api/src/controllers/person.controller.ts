@@ -17,9 +17,21 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {EmailNotification, Person, User} from '../models';
+import {authenticate} from '@loopback/authentication';
+import {genSalt, hash} from 'bcryptjs';
+
+import {
+  Person,
+  EmailNotification,
+  PersonMixedUserRequestBody
+} from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
-import {CryptingService, NotificationService} from '../services';
+import {
+  NotificationService,
+  JWTService,
+  MyUserService
+} from '../services';
+
 
 export class PersonController {
   constructor(
@@ -27,8 +39,8 @@ export class PersonController {
     public personRepository: PersonRepository,
     @repository(UserRepository)
     public userRepository: UserRepository,
-    @service(CryptingService)
-    public cryptingService: CryptingService,
+    @service(MyUserService)
+    public userService: MyUserService
   ) {}
 
   @post('/person', {
@@ -40,46 +52,40 @@ export class PersonController {
     },
   })
   async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: {
-            // We just require one more param(password) to create the relation
-            required: ['code', 'name', 'lastname', 'email', 'password'],
-          },
-        },
-      },
-    })
+    @requestBody(PersonMixedUserRequestBody)
     body: any,
   ): Promise<Person> {
     // Separe the password of the rest of the body
-    const {password, ...personBody} = body;
+    const {email, password, ...personBody} = body;
+    const role = 'person';
 
     // Create the person
-    const newPerson: Person = await this.personRepository.create(personBody);
+    const savedPerson: Person = await this.personRepository.create(personBody);
 
     // Encrypt the password two times using our Crypting Service
-    const encryptedPassword = this.cryptingService.getDoubledMd5Password(
-      password,
-    );
+    const encryptedPassword = await hash(password, await genSalt());
 
     // Prepare the data of the user with the password encrypted
     const newUserData = {
-      username: newPerson.email,
+      email: email,
       password: encryptedPassword,
-      role: 'person',
+      username: savedPerson.name,
+      role: role,
     };
 
-    // Create the user taking advantage of the relation 1to1 of the person
-    const newUser: Promise<User> = this.personRepository
-      .user(newPerson.id)
-      .create(newUserData);
+    const savedUser = await this.personRepository.user(savedPerson.id).create(newUserData);
+
+    await this.userRepository.userCredentials(savedUser.id).create({
+      password: encryptedPassword,
+      email: email,
+      role: role
+    });
 
     let emailData: EmailNotification = new EmailNotification({
       subject: 'Welcome to SocialD',
       body: 'Bienvenid@ a la nueva pagina de reclutamiento de programadores',
-      text: `Hola <strong>${newPerson.name}</strong> espereamos que te guste nuestra pagina recuerda que tu contrseña es ${password} `,
-      to: newPerson.email,
+      text: `Hola <strong>${savedPerson.name}</strong> espereamos que te guste nuestra pagina recuerda que tu contrseña es ${password} `,
+      to: email,
     });
 
     let sendEmail: boolean = await new NotificationService().EmailNotification(
@@ -90,7 +96,7 @@ export class PersonController {
       console.log('Message send!');
     }
 
-    return newPerson;
+    return savedPerson;
   }
 
   @get('/person/count', {
@@ -124,6 +130,7 @@ export class PersonController {
     return this.personRepository.find(filter);
   }
 
+  @authenticate('socialdjwt')
   @patch('/person', {
     responses: {
       '200': {
@@ -166,6 +173,7 @@ export class PersonController {
     return this.personRepository.findById(id, filter);
   }
 
+  @authenticate('socialdjwt')
   @patch('/person/{id}', {
     responses: {
       '204': {
@@ -187,6 +195,7 @@ export class PersonController {
     await this.personRepository.updateById(id, person);
   }
 
+  @authenticate('socialdjwt')
   @put('/person/{id}', {
     responses: {
       '204': {
@@ -201,6 +210,7 @@ export class PersonController {
     await this.personRepository.replaceById(id, person);
   }
 
+  @authenticate('socialdjwt')
   @del('/person/{id}', {
     responses: {
       '204': {
