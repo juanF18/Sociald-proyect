@@ -19,7 +19,6 @@ import {
 } from '@loopback/rest';
 import {authenticate} from '@loopback/authentication';
 import {genSalt, hash} from 'bcryptjs';
-import _ from 'lodash';
 
 import {
   Person,
@@ -81,9 +80,7 @@ export class PersonController {
       role: role,
     };
 
-    const savedUser = await this.personRepository.user(savedPerson.id).create(
-      _.omit(newUserData)
-    );
+    const savedUser = await this.personRepository.user(savedPerson.id).create(newUserData);
 
     await this.userRepository.userCredentials(savedUser.id).create({
       password: encryptedPassword,
