@@ -1,4 +1,4 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {PersonSkill} from './person-skill.model';
 
 @model()
@@ -9,6 +9,12 @@ export class Skill extends Entity {
     generated: true,
   })
   id?: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  code: string;
 
   @property({
     type: 'string',
