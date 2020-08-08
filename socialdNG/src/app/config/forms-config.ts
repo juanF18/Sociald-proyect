@@ -7,4 +7,6 @@ export namespace FormsConfig {
   export const PASSWORD_MIN_LENGTH = 10;
   export const ADRESS_MIN_LENGTH = 4;
   export const POSTALCOD_MIN_LENGTH = 3;
+
+  export const PARAM_NAME_MIN_LENGTH = 2;
 }

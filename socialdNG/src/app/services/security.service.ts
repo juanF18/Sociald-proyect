@@ -84,4 +84,9 @@ export class SecurityService {
     localStorage.removeItem('session');
     this.setUserData(new UserModel())
   }
+
+  getToken():String{
+    let currentSession = JSON.parse(this.getSessionData());
+    return currentSession.token;
+  }
 }

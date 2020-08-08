@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
       this.service.PersonLogin(model).subscribe(
         (data) => {
           this.service.saveSessionData(data);
-          showMessage('Bienvenido a tu cuenta');
           this.router.navigate(['/home']);
         },
         (error) => {

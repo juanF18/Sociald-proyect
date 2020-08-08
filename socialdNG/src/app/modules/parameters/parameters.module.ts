@@ -17,13 +17,14 @@ import { PublicationRequestCreationComponent } from './publication-request/publi
 import { PublicationRequestRemoveComponent } from './publication-request/publication-request-remove/publication-request-remove.component';
 import { PublicationRequestListComponent } from './publication-request/publication-request-list/publication-request-list.component';
 import { PublicationRequestEditionComponent } from './publication-request/publication-request-edition/publication-request-edition.component';
-
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [CategoryCreationComponent, CategoryEditionComponent, CategoryListComponent, CategoryRemoveComponent, AreaCreationComponent, AreaListComponent, AreaEditionComponent, SkillCreationComponent, SkillListComponent, SkillRemoveComponent, SkillEditionComponent, PublicationRequestCreationComponent, PublicationRequestRemoveComponent, PublicationRequestListComponent, PublicationRequestEditionComponent],
   imports: [
     CommonModule,
-    ParametersRoutingModule
+    ParametersRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class ParametersModule { }

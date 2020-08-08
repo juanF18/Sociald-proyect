@@ -27,7 +27,7 @@ const routes: Routes = [
     component:AreaCreationComponent
   },
   {
-    path:'area-edition',
+    path:'area-edition/:id',
     component:AreaEditionComponent
   },
   /**Category paht */
