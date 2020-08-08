@@ -3,7 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/user.model';
 import { SecurityService } from '../../../services/security.service';
+
+
 declare const showMessage: any;
+
+
 
 @Component({
   selector: 'app-login',
@@ -12,6 +16,7 @@ declare const showMessage: any;
 })
 export class LoginComponent implements OnInit {
   fgValidator: FormGroup;
+  
 
   constructor(
     private fb: FormBuilder,
@@ -38,7 +43,6 @@ export class LoginComponent implements OnInit {
       let model = this.getLoginData();
       this.service.PersonLogin(model).subscribe(
         (data) => {
-          console.log(data)
           this.service.saveSessionData(data);
           this.router.navigate(['/home']);
         },

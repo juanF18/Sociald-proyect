@@ -1,74 +1,72 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ServiceConfig } from '../config/service-config';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, from } from 'rxjs';
 import { UserModel } from '../models/user.model';
+import * as JWT from 'jwt-decode';
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SecurityService {
+  userData = new BehaviorSubject<UserModel>(new UserModel());
+  SECRET_KEY = 'socialdjwts3cr3t';
+  name: String = '';
 
-  userData = new BehaviorSubject<UserModel>(new UserModel);
+  constructor(private http: HttpClient) {
+    this.verifyCurrentSession();
+  }
 
-  constructor(
-    private http: HttpClient,
-    ) {
-      this.verifyCurrentSession()
+  verifyCurrentSession() {
+    let currentSession = this.getSessionData();
+    if (currentSession) {
+      this.setUserData(JSON.parse(currentSession));
     }
-
-
-    verifyCurrentSession(){
-      let currentSession = this.getSessionData();
-      if (currentSession){
-        this.setUserData(JSON.parse(currentSession));
-      }
-    }
-/**
- * 
- * @param user 
- */
-  setUserData(user: UserModel){
+  }
+  /**
+   *
+   * @param user
+   */
+  setUserData(user: UserModel) {
     this.userData.next(user);
   }
 
-  getUserData(){
+  getUserData() {
     return this.userData.asObservable();
   }
   /**
    * Metodo para llamar el post de person que esta en el backend
-   * @param person 
+   * @param person
    */
-  PersonLogin(user: UserModel):Observable<any> {
+  PersonLogin(user: UserModel): Observable<any> {
     return this.http.post<any>(`${ServiceConfig.BASE_URL}login`, user, {
-      headers: new HttpHeaders({
-
-      }),
+      headers: new HttpHeaders({}),
     });
   }
   /**
    * save user data
-   * @param session user data and tokern
+   * @param session only save token
    */
-  saveSessionData(session: any): boolean{
+  saveSessionData(session: any): boolean {
     let currentSession = localStorage.getItem('session');
-    if (currentSession){
+    if (currentSession) {
       return false;
-    }else{
+    } else {
       let data: UserModel = {
         token: session.token,
-        isLogged: true
+        isLogged: true,
       };
       localStorage.setItem('session', JSON.stringify(data));
       this.setUserData(data);
-      return true
+      return true;
     }
   }
 
   /**
    * return curren session
    */
-  getSessionData(){
+  getSessionData() {
     let currentSession = localStorage.getItem('session');
     return currentSession;
   }
@@ -76,13 +74,20 @@ export class SecurityService {
   /**
    * clear session data
    */
-  logout(){
+  logout() {
     localStorage.removeItem('session');
-    this.setUserData(new UserModel())
+    this.setUserData(new UserModel());
   }
 
-  getToken():String{
+  getToken(): String {
     let currentSession = JSON.parse(this.getSessionData());
     return currentSession.token;
   }
+
+  getDataToken(token: string):any{
+    let newData = JWT(token);
+    return newData
+    
+  }
+
 }
