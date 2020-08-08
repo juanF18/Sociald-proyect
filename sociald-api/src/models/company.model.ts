@@ -1,6 +1,6 @@
-import {Entity, model, property, hasOne, hasMany} from '@loopback/repository';
-import {User} from './user.model';
+import {Entity, hasMany, hasOne, model, property} from '@loopback/repository';
 import {PublicationRequest} from './publication-request.model';
+import {User} from './user.model';
 
 @model()
 export class Company extends Entity {
@@ -15,7 +15,7 @@ export class Company extends Entity {
     type: 'string',
     required: true,
   })
-  code: string;
+  Nit: string;
 
   @property({
     type: 'string',
@@ -65,10 +65,10 @@ const CompanyMixedUserSchema = {
     name: {type: 'string'},
     address: {type: 'string'},
     postalCode: {type: 'string'},
-    email: {type: 'string', format: 'email',},
+    email: {type: 'string', format: 'email'},
     password: {type: 'string', minLength: 8},
   },
-}
+};
 
 export const CompanyMixedUserRequestBody = {
   description: 'The form for create a company',

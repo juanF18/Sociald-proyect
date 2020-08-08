@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {service} from '@loopback/core';
 import {
   Count,
@@ -17,21 +18,10 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {authenticate} from '@loopback/authentication';
 import {genSalt, hash} from 'bcryptjs';
-
-import {
-  Person,
-  EmailNotification,
-  PersonMixedUserRequestBody
-} from '../models';
+import {EmailNotification, Person, PersonMixedUserRequestBody} from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
-import {
-  NotificationService,
-  JWTService,
-  MyUserService
-} from '../services';
-
+import {MyUserService, NotificationService} from '../services';
 
 export class PersonController {
   constructor(
@@ -40,7 +30,7 @@ export class PersonController {
     @repository(UserRepository)
     public userRepository: UserRepository,
     @service(MyUserService)
-    public userService: MyUserService
+    public userService: MyUserService,
   ) {}
 
   @post('/person', {
@@ -57,7 +47,7 @@ export class PersonController {
   ): Promise<Person> {
     // Separe the password of the rest of the body
     const {email, password, ...personBody} = body;
-    const role = 'person';
+    const role = 'admin';
 
     // Create the person
     const savedPerson: Person = await this.personRepository.create(personBody);
@@ -73,12 +63,14 @@ export class PersonController {
       role: role,
     };
 
-    const savedUser = await this.personRepository.user(savedPerson.id).create(newUserData);
+    const savedUser = await this.personRepository
+      .user(savedPerson.id)
+      .create(newUserData);
 
     await this.userRepository.userCredentials(savedUser.id).create({
       password: encryptedPassword,
       email: email,
-      role: role
+      role: role,
     });
 
     let emailData: EmailNotification = new EmailNotification({

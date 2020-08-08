@@ -1,22 +1,16 @@
-import {Entity, model, property, hasOne, hasMany} from '@loopback/repository';
-import {User} from './user.model';
+import {Entity, hasMany, hasOne, model, property} from '@loopback/repository';
 import {PersonSkill} from './person-skill.model';
 import {Publication} from './publication.model';
+import {User} from './user.model';
 
 @model()
 export class Person extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: true
+    generated: true,
   })
   id?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  code: string;
 
   @property({
     type: 'string',
@@ -69,10 +63,10 @@ const PersonMixedUserSchema = {
     name: {type: 'string'},
     lastname: {type: 'string'},
     phone: {type: 'string'},
-    email: {type: 'string', format: 'email',},
+    email: {type: 'string', format: 'email'},
     password: {type: 'string', minLength: 8},
   },
-}
+};
 
 export const PersonMixedUserRequestBody = {
   description: 'The form for create a person',
