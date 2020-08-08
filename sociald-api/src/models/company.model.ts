@@ -15,7 +15,7 @@ export class Company extends Entity {
     type: 'string',
     required: true,
   })
-  Nit: string;
+  nit: string;
 
   @property({
     type: 'string',
@@ -61,7 +61,7 @@ const CompanyMixedUserSchema = {
   type: 'object',
   required: ['code', 'name', 'address', 'email', 'password'],
   properties: {
-    code: {type: 'number'},
+    nit: {type: 'number'},
     name: {type: 'string'},
     address: {type: 'string'},
     postalCode: {type: 'string'},

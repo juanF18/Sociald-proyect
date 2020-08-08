@@ -59,7 +59,6 @@ const PersonMixedUserSchema = {
   type: 'object',
   required: ['code', 'name', 'lastname', 'phone', 'email', 'password'],
   properties: {
-    code: {type: 'number'},
     name: {type: 'string'},
     lastname: {type: 'string'},
     phone: {type: 'string'},
