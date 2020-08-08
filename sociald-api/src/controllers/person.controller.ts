@@ -23,15 +23,13 @@ import {genSalt, hash} from 'bcryptjs';
 import {
   Person,
   EmailNotification,
-  CredentialsRequestBody,
   PersonMixedUserRequestBody
 } from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
 import {
   NotificationService,
   JWTService,
-  MyUserService,
-  Credentials
+  MyUserService
 } from '../services';
 
 
@@ -42,9 +40,7 @@ export class PersonController {
     @repository(UserRepository)
     public userRepository: UserRepository,
     @service(MyUserService)
-    public userService: MyUserService,
-    @service(JWTService)
-    public jwtService: JWTService,
+    public userService: MyUserService
   ) {}
 
   @post('/person', {
@@ -101,38 +97,6 @@ export class PersonController {
     }
 
     return savedPerson;
-  }
-
-  @post('/person/login', {
-    responses: {
-      '200': {
-        description: 'Token',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                token: {
-                  type: 'string',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  })
-  async login(
-    @requestBody(CredentialsRequestBody) credentials: Credentials,
-  ): Promise<{token: string}> {
-    // ensure the user exists, and the password is correct
-    const user = await this.userService.verifyCredentials(credentials);
-    // convert a User object into a UserProfile object (reduced set of properties)
-    const userProfile = this.userService.convertToUserProfile(user);
-
-    // create a JSON Web Token based on the user profile
-    const token = await this.jwtService.generateToken(userProfile);
-    return {token};
   }
 
   @get('/person/count', {

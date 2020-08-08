@@ -3,17 +3,12 @@
 import {service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors, post, requestBody} from '@loopback/rest';
-import {EmailNotification, SmsNotification} from '../models';
+import {EmailNotification, SmsNotification, CredentialsRequestBody} from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
-import {NotificationService} from '../services';
+import {NotificationService, Credentials, MyUserService, JWTService} from '../services';
 import {AuthenticationService} from '../services/authentication.service';
 
 // import {inject} from '@loopback/core';
-
-class Credentials {
-  username: string;
-  password: string;
-}
 
 class PasswordResetData {
   email: string;
@@ -24,37 +19,42 @@ export class UserController {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
-    @service(AuthenticationService)
-    public authenticationService: AuthenticationService,
-    @repository(PersonRepository)
-    public personRepository: PersonRepository,
+    @service(MyUserService)
+    public userService: MyUserService,
+    @service(JWTService)
+    public jwtService: JWTService,
   ) {}
 
-  @post('login', {
+  @post('/company/login', {
     responses: {
       '200': {
-        description: 'Login for Users',
+        description: 'Token',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                token: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
       },
     },
   })
-  async login(@requestBody() credentials: Credentials): Promise<object> {
-    // Use the authService to identify the params credentials
-    const authResponse = await this.authenticationService.identify(
-      credentials.username,
-      credentials.password,
-    );
+  async login(
+    @requestBody(CredentialsRequestBody) credentials: Credentials,
+  ): Promise<{token: string}> {
+    // ensure the user exists, and the password is correct
+    const user = await this.userService.verifyCredentials(credentials);
+    // convert a User object into a UserProfile object (reduced set of properties)
+    const userProfile = this.userService.convertToUserProfile(user);
 
-    // If the user is identified then generate the token with our auth service
-    if (authResponse) {
-      let tk = await this.authenticationService.generateToken(authResponse);
-
-      return {
-        data: authResponse,
-        token: tk,
-      };
-    } else {
-      throw new HttpErrors[401]('User or Password invalid.');
-    }
+    // create a JSON Web Token based on the user profile
+    const token = await this.jwtService.generateToken(userProfile);
+    return {token};
   }
 
   // @post('/password-reset', {
