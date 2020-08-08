@@ -9,6 +9,8 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
+import { JWTAuthenticationComponent } from './jwt-authentication-component';
+import { AuthenticationComponent } from '@loopback/authentication';
 
 export {ApplicationConfig};
 
@@ -29,6 +31,10 @@ export class SocialdApiApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+
+    // Bind Authentication Components to App
+    this.component(AuthenticationComponent);
+    this.component(JWTAuthenticationComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

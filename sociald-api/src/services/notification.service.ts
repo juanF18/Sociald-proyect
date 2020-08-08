@@ -35,7 +35,7 @@ export class NotificationService {
         text: notification.body,
         html: notification.text,
       };
-      console.log(msg);
+
       await sgMail.send(msg).then(
         (d: any) => {
           console.log(d);

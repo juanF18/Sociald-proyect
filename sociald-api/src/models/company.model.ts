@@ -27,13 +27,7 @@ export class Company extends Entity {
     type: 'string',
     required: true,
   })
-  email: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  adress: string;
+  address: string;
 
   @property({
     type: 'number',
@@ -62,3 +56,24 @@ export interface CompanyRelations {
 }
 
 export type CompanyWithRelations = Company & CompanyRelations;
+
+const CompanyMixedUserSchema = {
+  type: 'object',
+  required: ['code', 'name', 'address', 'email', 'password'],
+  properties: {
+    code: {type: 'number'},
+    name: {type: 'string'},
+    address: {type: 'string'},
+    postalCode: {type: 'string'},
+    email: {type: 'string', format: 'email',},
+    password: {type: 'string', minLength: 8},
+  },
+}
+
+export const CompanyMixedUserRequestBody = {
+  description: 'The form for create a company',
+  required: true,
+  content: {
+    'application/json': {schema: CompanyMixedUserSchema},
+  },
+};

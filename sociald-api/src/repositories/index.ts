@@ -7,3 +7,4 @@ export * from './publication-request.repository';
 export * from './publication.repository';
 export * from './skill.repository';
 export * from './user.repository';
+export * from './user-credentials.repository';
