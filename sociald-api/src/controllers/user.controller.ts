@@ -25,7 +25,7 @@ export class UserController {
     public jwtService: JWTService,
   ) {}
 
-  @post('/company/login', {
+  @post('login', {
     responses: {
       '200': {
         description: 'Token',
