@@ -28,7 +28,6 @@ import {
 } from '../models';
 import {PersonRepository, UserRepository} from '../repositories';
 import {
-  CryptingService,
   NotificationService,
   JWTService,
   MyUserService,
@@ -42,8 +41,6 @@ export class PersonController {
     public personRepository: PersonRepository,
     @repository(UserRepository)
     public userRepository: UserRepository,
-    @service(CryptingService)
-    public cryptingService: CryptingService,
     @service(MyUserService)
     public userService: MyUserService,
     @service(JWTService)
@@ -61,7 +58,7 @@ export class PersonController {
   async create(
     @requestBody(PersonMixedUserRequestBody)
     body: any,
-  ): Promise<any> {
+  ): Promise<Person> {
     // Separe the password of the rest of the body
     const {email, password, ...personBody} = body;
     const role = 'person';
@@ -103,7 +100,7 @@ export class PersonController {
       console.log('Message send!');
     }
 
-    return {savedPerson, savedUser};
+    return savedPerson;
   }
 
   @post('/person/login', {
