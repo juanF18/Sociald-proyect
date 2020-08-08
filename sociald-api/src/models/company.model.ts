@@ -30,6 +30,11 @@ export class Company extends Entity {
   address: string;
 
   @property({
+    type: 'string',
+  })
+  phone?: string;
+
+  @property({
     type: 'number',
     default: 0,
   })
@@ -64,6 +69,7 @@ const CompanyMixedUserSchema = {
     code: {type: 'number'},
     name: {type: 'string'},
     address: {type: 'string'},
+    phone: {type: 'string'},
     postalCode: {type: 'string'},
     email: {type: 'string', format: 'email',},
     password: {type: 'string', minLength: 8},
