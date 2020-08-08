@@ -5,7 +5,7 @@ import {UserProfile} from '@loopback/security';
 import {TokenServiceBindings} from '../keys';
 
 export class JWTAuthenticationStrategy implements AuthenticationStrategy {
-  name = 'myjwt';
+  name = 'socialdjwt';
 
   constructor(
     @inject(TokenServiceBindings.TOKEN_SERVICE)

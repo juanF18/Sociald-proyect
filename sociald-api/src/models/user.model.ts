@@ -10,8 +10,7 @@ export class User extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: false,
-    defaultFn: 'uuidv4'
+    generated: true
   })
   id: string;
 
