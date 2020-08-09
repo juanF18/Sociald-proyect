@@ -47,7 +47,7 @@ export class PersonController {
   ): Promise<Person> {
     // Separe the password of the rest of the body
     const {email, password, ...personBody} = body;
-    const role = 'admin';
+    const role = 'person';
 
     // Create the person
     const savedPerson: Person = await this.personRepository.create(personBody);
