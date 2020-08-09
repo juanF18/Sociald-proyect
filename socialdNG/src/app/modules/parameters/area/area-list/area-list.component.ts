@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AreaModel } from '../../../../models/area.model';
 import { AreaService } from '../../../../services/parameters/area.service';
-
+import { Router } from '@angular/router';
+declare const closeModal:any
 declare const showMessage: any;
 declare const showRemoveConfirmation: any;
-declare const showNewRecordModal: any
 @Component({
   selector: 'app-area-list',
   templateUrl: './area-list.component.html',
@@ -12,20 +12,19 @@ declare const showNewRecordModal: any
 })
 export class AreaListComponent implements OnInit {
   recordList: AreaModel[];
-  
-  constructor(
-    private service: AreaService
-    ) {}
+  idToRemove: string = '';
+
+  constructor(private service: AreaService, private router: Router) {}
 
   ngOnInit(): void {
-    this.fillsRecords()
+    this.fillsRecords();
   }
 
-  fillsRecords(){
+  fillsRecords() {
     this.service.getAllRecords().subscribe(
       (data) => {
         this.recordList = data;
-        console.log(this.recordList);
+        //console.log(this.recordList);
       },
       (error) => {
         showMessage('error en al comunicacion del backend');
@@ -33,11 +32,24 @@ export class AreaListComponent implements OnInit {
     );
   }
 
-  RemoveConfirmation(){
-    showRemoveConfirmation()
+  RemoveConfirmation(id) {
+    this.idToRemove = id;
+    showRemoveConfirmation();
   }
 
-  addNewRecord(){
-    showNewRecordModal()
+  deleteRecord() {
+    if (this.idToRemove){
+      this.service.deleteRecord(this.idToRemove).subscribe(
+        (data) => {
+          this.idToRemove = '';
+          showMessage('Record removed successfuly');
+          closeModal('removeCofirmation')
+          this.fillsRecords()
+        },
+        (error) => {
+          showMessage('error en al comunicacion del backend');
+        }
+      );  
+    }
   }
 }

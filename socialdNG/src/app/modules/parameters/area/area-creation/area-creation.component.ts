@@ -28,6 +28,7 @@ export class AreaCreationComponent implements OnInit {
 
   FormBuilding() {
     this.fgValidator = this.fb.group({
+      code: ['',[Validators.required]],
       name: ['', [Validators.required, Validators.minLength(this.nameMinLength)]],
       description: ['', [Validators.required]]
     });
@@ -52,6 +53,7 @@ export class AreaCreationComponent implements OnInit {
 
   getAreaData(): AreaModel{
     let model = new AreaModel();
+    model.code = this.fgv.code.value;
     model.name = this.fgv.name.value;
     model.description = this.fgv.description.value;
     return model;

@@ -12,4 +12,10 @@ function showRemoveConfirmation() {
   instances.open();
 }
 
+function closeModal(idModal){
+  let elem = document.querySelector("#"+idModal);
+  let instances = M.Modal.init(elem, {
+    dismissible: false
+  });
+}
 
