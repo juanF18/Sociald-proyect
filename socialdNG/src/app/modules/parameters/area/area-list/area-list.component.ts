@@ -11,6 +11,7 @@ declare const showRemoveConfirmation: any;
   styleUrls: ['./area-list.component.css'],
 })
 export class AreaListComponent implements OnInit {
+  p: number = 1;
   recordList: AreaModel[];
   idToRemove: string = '';
 

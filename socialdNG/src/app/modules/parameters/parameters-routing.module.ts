@@ -22,7 +22,7 @@ const routes: Routes = [
     component:AreaListComponent
   },
   {
-    path:'area-create',
+    path:'area-creation',
     component:AreaCreationComponent
   },
   {
