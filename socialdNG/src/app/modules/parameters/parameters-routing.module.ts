@@ -4,7 +4,6 @@ import { AreaListComponent } from './area/area-list/area-list.component';
 import { AreaCreationComponent } from './area/area-creation/area-creation.component';
 import { AreaEditionComponent } from './area/area-edition/area-edition.component';
 import { CategoryCreationComponent } from './category/category-creation/category-creation.component';
-import { CategoryRemoveComponent } from './category/category-remove/category-remove.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { CategoryEditionComponent } from './category/category-edition/category-edition.component';
 import { PublicationRequestCreationComponent } from './publication-request/publication-request-creation/publication-request-creation.component';
@@ -36,15 +35,11 @@ const routes: Routes = [
     component:CategoryCreationComponent
   },
   {
-    path:'category-remove',
-    component:CategoryRemoveComponent
-  },
-  {
     path:'category-list',
     component:CategoryListComponent
   },
   {
-    path:'category-edition',
+    path:'category-edition/:id',
     component:CategoryEditionComponent
   },
   

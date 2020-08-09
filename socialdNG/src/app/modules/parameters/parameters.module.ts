@@ -5,7 +5,6 @@ import { ParametersRoutingModule } from './parameters-routing.module';
 import { CategoryCreationComponent } from './category/category-creation/category-creation.component';
 import { CategoryEditionComponent } from './category/category-edition/category-edition.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
-import { CategoryRemoveComponent } from './category/category-remove/category-remove.component';
 import { AreaCreationComponent } from './area/area-creation/area-creation.component';
 import { AreaListComponent } from './area/area-list/area-list.component';
 import { AreaEditionComponent } from './area/area-edition/area-edition.component';
@@ -18,13 +17,15 @@ import { PublicationRequestRemoveComponent } from './publication-request/publica
 import { PublicationRequestListComponent } from './publication-request/publication-request-list/publication-request-list.component';
 import { PublicationRequestEditionComponent } from './publication-request/publication-request-edition/publication-request-edition.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { NgxPaginationModule } from "ngx-pagination";
 
 @NgModule({
-  declarations: [CategoryCreationComponent, CategoryEditionComponent, CategoryListComponent, CategoryRemoveComponent, AreaCreationComponent, AreaListComponent, AreaEditionComponent, SkillCreationComponent, SkillListComponent, SkillRemoveComponent, SkillEditionComponent, PublicationRequestCreationComponent, PublicationRequestRemoveComponent, PublicationRequestListComponent, PublicationRequestEditionComponent],
+  declarations: [CategoryCreationComponent, CategoryEditionComponent, CategoryListComponent,  AreaCreationComponent, AreaListComponent, AreaEditionComponent, SkillCreationComponent, SkillListComponent, SkillRemoveComponent, SkillEditionComponent, PublicationRequestCreationComponent, PublicationRequestRemoveComponent, PublicationRequestListComponent, PublicationRequestEditionComponent],
   imports: [
     CommonModule,
     ParametersRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    NgxPaginationModule
   ]
 })
 export class ParametersModule { }
