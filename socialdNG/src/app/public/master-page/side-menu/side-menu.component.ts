@@ -14,15 +14,16 @@ export class SideMenuComponent implements OnInit {
 
   subscription: Subscription;
 
-  constructor(private service: SecurityService) {}
-
+  constructor(private service: SecurityService) {
+  }
+  
   ngOnInit(): void {
+    let sessionData = this.service.getSessionData();
     this.subscription = this.service.getUserData().subscribe((data) => {
       this.isLogged = data.isLogged;
-      let userData = this.service.getDataToken(data.token);
-      this.email = userData.email;
-      this.role = userData.role;
-      console.log(this.email, this.role);
+      let tokenData = this.service.getDataToken(sessionData);
+      this.role = tokenData.role;
+      this.email = tokenData.email;
       
     });
   }

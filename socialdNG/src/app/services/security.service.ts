@@ -55,7 +55,7 @@ export class SecurityService {
     } else {
       let data: UserModel = {
         token: session.token,
-        isLogged: true,
+        isLogged: true
       };
       localStorage.setItem('session', JSON.stringify(data));
       this.setUserData(data);
