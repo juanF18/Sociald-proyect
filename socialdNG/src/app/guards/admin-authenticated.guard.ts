@@ -17,6 +17,7 @@ export class AdminAuthenticatedGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      
       if(this.secSecurity.sessionExist() &&  this.secSecurity.getRolInSession(ServiceConfig.ADMIN_ROL)){
         return true;
       }else{

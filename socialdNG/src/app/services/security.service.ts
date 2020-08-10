@@ -78,7 +78,7 @@ export class SecurityService {
   getRolInSession(roleId): boolean {
     let currentSession = this.getSessionData();
     let dataSession = this.getDataToken(currentSession);
-    return dataSession.role == roleId.lowercase();
+    return dataSession.role == roleId;
   }
 
   /**
