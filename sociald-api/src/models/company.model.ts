@@ -71,6 +71,7 @@ const CompanyMixedUserSchema = {
     address: {type: 'string'},
     phone: {type: 'string'},
     postalCode: {type: 'string'},
+    profilPicPath: {type: 'string'},
     email: {type: 'string', format: 'email'},
     password: {type: 'string', minLength: 8},
   },
