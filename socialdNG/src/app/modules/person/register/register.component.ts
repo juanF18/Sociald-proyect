@@ -30,6 +30,7 @@ declare const showMessage: any;
 })
 export class RegisterComponent implements OnInit {
   fgValidator: FormGroup;
+  profile_pic : string = '';
   codeMinLength = fconfig.CODE_MIN_LENGTH;
   nameMinLength = fconfig.NAME_MIN_LENGTH;
   lastnameMinLength = fconfig.LASTNAME_MIN_LENGTH;
@@ -117,7 +118,7 @@ export class RegisterComponent implements OnInit {
         status,
         data: JSON.parse(response),
       });
-      this.fgv.profilePicPath.setValue(JSON.parse(response).public_id);
+      this.profile_pic = JSON.parse(response).public_id;
       console.log(this.fgv);
       this.uploader.onProgressItem = (fileItem: any, progress: any) => {
         upsertResponse({
@@ -127,6 +128,7 @@ export class RegisterComponent implements OnInit {
         });
       };
     };
+    this.fgv.profilePicPath.setValue(this.profile_pic)
   }
 
   FormBuilding() {

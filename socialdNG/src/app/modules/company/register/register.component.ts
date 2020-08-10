@@ -11,6 +11,7 @@ declare const showMessage: any;
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  profile_pic : string = '';
   fgValidator: FormGroup;
   codeMinLength = fconfig.CODE_MIN_LENGTH;
   nameMinLength = fconfig.NAME_MIN_LENGTH;
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
   }
   FormBuilding() {
     this.fgValidator = this.fb.group({
-      code: ['', [Validators.required, Validators.minLength(this.codeMinLength)]],
+      nit: ['', [Validators.required, Validators.minLength(this.codeMinLength)]],
       name: ['', [Validators.required, Validators.minLength(this.nameMinLength)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['',[Validators.required, Validators.minLength(this.phoneMinLength), Validators.maxLength(this.phoneMaxLength)]],
@@ -60,7 +61,7 @@ export class RegisterComponent implements OnInit {
 
   getCompanyData(): CompanyModel{
     let model = new CompanyModel();
-    model.code = this.fgv.code.value;
+    model.nit = this.fgv.code.value;
     model.name= this.fgv.name.value;
     model.email = this.fgv.email.value;
     model.adress = this.fgv.adress.value;

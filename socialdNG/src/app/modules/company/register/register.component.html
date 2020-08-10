@@ -29,8 +29,8 @@
             </div>  
             <div class="input-field col s4">
                 <i class="material-icons prefix">perm_identity</i>
-                <input id="code" formControlName="code" type="text" class="validate" required>
-                <label for="code">Nit</label>
+                <input id="nit" formControlName="nit" type="text" class="validate" required>
+                <label for="nit">Nit</label>
                 <div class="warning-validator" *ngIf="fgv.code.errors && (fgv.code.dirty || fgv.code.touched)">
                     <strong *ngIf="fgv.code.errors.required">
                         This field is required.
