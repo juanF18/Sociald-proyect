@@ -43,7 +43,7 @@ export class Company extends Entity {
   @property({
     type: 'string',
   })
-  profilPicPath?: string;
+  profilePicPath?: string;
 
   @hasOne(() => User)
   user: User;
@@ -64,14 +64,14 @@ export type CompanyWithRelations = Company & CompanyRelations;
 
 const CompanyMixedUserSchema = {
   type: 'object',
-  required: ['code', 'name', 'address', 'email', 'password'],
+  required: ['nit', 'name', 'address', 'email', 'password'],
   properties: {
     nit: {type: 'number'},
     name: {type: 'string'},
     address: {type: 'string'},
     phone: {type: 'string'},
     postalCode: {type: 'string'},
-    profilPicPath: {type: 'string'},
+    profilePicPath: {type: 'string'},
     email: {type: 'string', format: 'email'},
     password: {type: 'string', minLength: 8},
   },
