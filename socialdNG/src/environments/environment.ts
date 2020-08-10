@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  CLOUD_NAME: 'dx5omgcj6',
+  API_KEY: '156653679587163',
+  API_SECRET: '3Zi4MkPe2SzLvDoGybd3ZgnX0eg',
+  ENV_VARIABLE:
+    'cloudinary://156653679587163:3Zi4MkPe2SzLvDoGybd3ZgnX0eg@dx5omgcj6',
+  UPLOAD_PRESET: 'xrcozwho'  
 };
 
 /*
