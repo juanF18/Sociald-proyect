@@ -5,7 +5,6 @@ import { Observable, BehaviorSubject, from } from 'rxjs';
 import { UserModel } from '../models/user.model';
 import * as JWT from 'jwt-decode';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -55,7 +54,7 @@ export class SecurityService {
     } else {
       let data: UserModel = {
         token: session.token,
-        isLogged: true
+        isLogged: true,
       };
       localStorage.setItem('session', JSON.stringify(data));
       this.setUserData(data);
@@ -71,6 +70,17 @@ export class SecurityService {
     return currentSession;
   }
 
+  sessionExist(): boolean {
+    let currentSession = this.getSessionData();
+    return currentSession ? true : false;
+  }
+
+  getRolInSession(roleId): boolean {
+    let currentSession = this.getSessionData();
+    let dataSession = this.getDataToken(currentSession);
+    return dataSession.role == roleId.lowercase();
+  }
+
   /**
    * clear session data
    */
@@ -84,10 +94,8 @@ export class SecurityService {
     return currentSession.token;
   }
 
-  getDataToken(token: string):any{
+  getDataToken(token: string): any {
     let newData = JWT(token);
-    return newData
-    
+    return newData;
   }
-
 }

@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
+import { UnauthenticatedGuard } from 'src/app/guards/unauthenticated.guard';
 
 const routes: Routes = [
   {
     path: 'register-person',
-    component: RegisterComponent
+    component: RegisterComponent,
+    canActivate: [UnauthenticatedGuard]
   }
 ];
 

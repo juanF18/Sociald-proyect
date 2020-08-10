@@ -4,22 +4,28 @@ import { LoginComponent } from "./login/login.component";
 import { LogoutComponent } from "./logout/logout.component";
 import { ResetComponent } from "./reset/reset.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { UnauthenticatedGuard } from "../../guards/unauthenticated.guard";
+import { AuthenticatedGuard } from "../../guards/authenticated.guard";
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate:[UnauthenticatedGuard]
   },
   {
     path: 'logout',
-    component: LogoutComponent
+    component: LogoutComponent,
+    canActivate:[AuthenticatedGuard]
   },
   {
     path: 'reset',
-    component: ResetComponent
+    component: ResetComponent,
+    canActivate:[UnauthenticatedGuard]
   },
   {
     path: 'change-password',
-    component: ChangePasswordComponent
+    component: ChangePasswordComponent,
+    canActivate:[AuthenticatedGuard]
   }
 ];
 
