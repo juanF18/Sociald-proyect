@@ -16,6 +16,12 @@ export class Person extends Entity {
     type: 'string',
     required: true,
   })
+  code: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   name: string;
 
   @property({
@@ -33,7 +39,7 @@ export class Person extends Entity {
   @property({
     type: 'string',
   })
-  profilPicPath?: string;
+  profilePicPath?: string;
 
   @hasOne(() => User)
   user: User;
@@ -59,11 +65,13 @@ const PersonMixedUserSchema = {
   type: 'object',
   required: ['code', 'name', 'lastname', 'phone', 'email', 'password'],
   properties: {
+    code: {type: 'string'},
     name: {type: 'string'},
     lastname: {type: 'string'},
     phone: {type: 'string'},
     email: {type: 'string', format: 'email'},
     password: {type: 'string', minLength: 8},
+    profilePicPath: {type: 'string'},
   },
 };
 
