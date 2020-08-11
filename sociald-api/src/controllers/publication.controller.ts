@@ -15,6 +15,7 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {Publication} from '../models';
 import {PublicationRepository} from '../repositories';
@@ -50,6 +51,14 @@ export class PublicationController {
     })
     publication: Omit<Publication, 'id'>,
   ): Promise<Publication> {
+    let searchName = await this.publicationRepository.findOne({
+      where: { name: publication.name }
+    });
+
+    if(searchName) {
+      throw new HttpErrors.UnprocessableEntity("This area name already exists!")
+    }
+
     let count = (await this.publicationRepository.count()).count;
 
     let withCode = {

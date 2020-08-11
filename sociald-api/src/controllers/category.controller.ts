@@ -15,6 +15,7 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {Category} from '../models';
 import {CategoryRepository} from '../repositories';
@@ -50,6 +51,14 @@ export class CategoryController {
     })
     category: Omit<Category, 'id'>,
   ): Promise<Category> {
+    let searchName = await this.categoryRepository.findOne({
+      where: { name: category.name }
+    });
+
+    if(searchName) {
+      throw new HttpErrors.UnprocessableEntity("This area name already exists!")
+    }
+
     let count = (await this.categoryRepository.count()).count;
 
     let withCode = {

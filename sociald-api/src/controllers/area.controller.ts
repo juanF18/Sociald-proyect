@@ -15,6 +15,7 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {Area} from '../models';
 import {AreaRepository} from '../repositories';
@@ -50,6 +51,15 @@ export class AreaController {
     })
     area: Omit<Area, 'id'>,
   ): Promise<Area> {
+
+    let searchName = await this.areaRepository.findOne({
+      where: { name: area.name }
+    });
+
+    if(searchName) {
+      throw new HttpErrors.UnprocessableEntity("This area name already exists!")
+    }
+
     let count = (await this.areaRepository.count()).count;
 
     let withCode = {
