@@ -1,5 +1,7 @@
-import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Entity, model, property, hasOne, belongsTo} from '@loopback/repository';
 import { UserCredentials } from './user-credentials.model';
+import { Person } from './person.model';
+import { Company } from './company.model';
 
 @model({
   settings: {
@@ -40,14 +42,10 @@ export class User extends Entity {
   })
   role: string;
 
-  @property({
-    type: 'string',
-  })
+  @belongsTo(() => Person)
   personId?: string;
 
-  @property({
-    type: 'string',
-  })
+  @belongsTo(() => Company)
   companyId?: string;
 
   @hasOne(() => UserCredentials)

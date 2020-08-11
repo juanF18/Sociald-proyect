@@ -4,10 +4,13 @@ import {
   HasOneRepositoryFactory,
   juggler,
   repository,
+  BelongsToAccessor,
 } from '@loopback/repository';
 import {UserServiceBindings} from '../keys';
-import {User, UserCredentials, UserRelations} from '../models';
+import {User, UserCredentials, UserRelations, Person, Company} from '../models';
 import {UserCredentialsRepository} from './user-credentials.repository';
+import { PersonRepository } from './person.repository';
+import { CompanyRepository } from './company.repository';
 
 export class UserRepository extends DefaultCrudRepository<
   User,
@@ -18,6 +21,14 @@ export class UserRepository extends DefaultCrudRepository<
     UserCredentials,
     typeof User.prototype.id
   >;
+  public readonly person: BelongsToAccessor<
+    Person,
+    typeof User.prototype.id
+  >;
+  public readonly company: BelongsToAccessor<
+    Company,
+    typeof User.prototype.id
+  >;
 
   constructor(
     @inject(`datasources.${UserServiceBindings.DATASOURCE_NAME}`)
@@ -25,6 +36,14 @@ export class UserRepository extends DefaultCrudRepository<
     @repository.getter('UserCredentialsRepository')
     protected userCredentialsRepositoryGetter: Getter<
       UserCredentialsRepository
+    >,
+    @repository.getter('PersonRepository')
+    protected personRepositoryGetter: Getter<
+      PersonRepository
+    >,
+    @repository.getter('CompanyRepository')
+    protected companyRepositoryGetter: Getter<
+      CompanyRepository
     >,
   ) {
     super(User, dataSource);
@@ -35,6 +54,22 @@ export class UserRepository extends DefaultCrudRepository<
     this.registerInclusionResolver(
       'userCredentials',
       this.userCredentials.inclusionResolver,
+    );
+    this.person = this.createBelongsToAccessorFor(
+      'person',
+      personRepositoryGetter,
+    );
+    this.registerInclusionResolver(
+      'person',
+      this.person.inclusionResolver,
+    );
+    this.company = this.createBelongsToAccessorFor(
+      'company',
+      companyRepositoryGetter,
+    );
+    this.registerInclusionResolver(
+      'company',
+      this.company.inclusionResolver,
     );
   }
 
@@ -47,6 +82,25 @@ export class UserRepository extends DefaultCrudRepository<
       if (err.code === 'ENTITY_NOT_FOUND') {
         return undefined;
       }
+      throw err;
+    }
+  }
+
+  async getData(
+    userId: typeof User.prototype.id,
+    role: typeof User.prototype.role,
+  ): Promise <Person | Company | undefined> {
+    try{
+      if(role == "person"){
+        return await this.person(userId);
+      }else{
+        return await this.company(userId);
+      }
+    }catch (err){
+      if (err.code === 'ENTITY_NOT_FOUND') {
+        return undefined;
+      }
+
       throw err;
     }
   }
