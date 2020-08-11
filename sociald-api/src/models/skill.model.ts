@@ -13,12 +13,9 @@ export class Skill extends Entity {
   @property({
     type: 'string',
     required: true,
-  })
-  code: string;
-
-  @property({
-    type: 'string',
-    required: true,
+    index: {
+      unique: true,
+    },
   })
   name: string;
 

@@ -11,10 +11,10 @@ export class Area extends Entity {
   id?: string;
 
   @property({
-    type: 'string',
+    type: 'number',
     required: true,
   })
-  code: string;
+  code: number;
 
   @property({
     type: 'string',

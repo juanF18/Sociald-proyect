@@ -72,7 +72,6 @@ const PersonMixedUserSchema = {
     profilPicPath: {type: 'string'},
     email: {type: 'string', format: 'email'},
     password: {type: 'string', minLength: 8},
-    profilePicPath: {type: 'string'},
   },
 };
 
