@@ -1,11 +1,11 @@
 export class CompanyModel{
     id?: string;
-    code: string;
+    nit: string;
     name: string;
     email: string;
     phone: string;
     adress:string;
     password:string;
     postalCode?:string;
-    profilPicPath?:string;
+    profilePicPath?:string;
 }
