@@ -18,11 +18,15 @@ import {
 } from '@loopback/rest';
 import {Category} from '../models';
 import {CategoryRepository} from '../repositories';
+import { service } from '@loopback/core';
+import { CodeGeneratorService } from '../services/code-generator.service';
 
 export class CategoryController {
   constructor(
     @repository(CategoryRepository)
     public categoryRepository : CategoryRepository,
+    @service(CodeGeneratorService)
+    private codeGeneratorService: CodeGeneratorService,
   ) {}
 
   @post('/category', {
@@ -39,14 +43,21 @@ export class CategoryController {
         'application/json': {
           schema: getModelSchemaRef(Category, {
             title: 'NewCategory',
-            exclude: ['id'],
+            exclude: ['id', 'code'],
           }),
         },
       },
     })
     category: Omit<Category, 'id'>,
   ): Promise<Category> {
-    return this.categoryRepository.create(category);
+    let count = (await this.categoryRepository.count()).count;
+
+    let withCode = {
+      ...category,
+      code: await this.codeGeneratorService.genNextCode(count),
+    };
+
+    return this.categoryRepository.create(withCode);
   }
 
   @get('/category/count', {
