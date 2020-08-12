@@ -21,26 +21,37 @@ export class PublicationService {
     this.currentUser = this.securityService.getDataToken(this.token);
   }
 
+  getAllPublications(): Observable<PublicationModel[]> {
+    return this.http.get<PublicationModel[]>(
+      `${ServiceConfig.BASE_URL}publications`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.token}`,
+        }),
+      }
+    )
+  }
+
   getPublicationsById(id: string): Observable<PublicationModel[]> {
     return this.http.get<PublicationModel[]>(
-      `${ServiceConfig.BASE_URL}/people/${id}/publications`
+      `${ServiceConfig.BASE_URL}people/${id}/publications`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.token}`,
+        }),
+      }
     )
   }
 
   getAllMyPublications(): Observable<PublicationModel[]> {
     return this.http.get<PublicationModel[]>(
-      `${ServiceConfig.BASE_URL}/people/${this.currentUser.id}/publications`
+      `${ServiceConfig.BASE_URL}people/${this.currentUser.data.id}/publications`
     )
   }
 
-  postPublication(newPublicationAll: PublicationModel): Observable<PublicationModel> {
-    let {
-      categories,
-      ...newPublication
-    } = newPublicationAll;
-
+  postPublication(newPublication: PublicationModel): Observable<PublicationModel> {
     return this.http.post<PublicationModel>(
-      `${ServiceConfig.BASE_URL}/people/${this.currentUser.data.id}/publications`,
+      `${ServiceConfig.BASE_URL}people/${this.currentUser.data.id}/publications`,
       newPublication,
       {
         headers: new HttpHeaders({
@@ -48,12 +59,5 @@ export class PublicationService {
         }),
       }
     );
-  }
-
-  linkPublicationWithCategories(id: string, categories: string[]): Observable<any> {
-    return this.http.post(
-      `${ServiceConfig.BASE_URL}/publications/${id}/link-categories`,
-      categories
-    )
   }
 }

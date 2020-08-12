@@ -7,6 +7,5 @@ export class PublicationModel{
     description:string;
     status: boolean = false;
     publicationPicPath?:string;
-    categories?: string[];
-    // categoriesRaw?: string[];
+    categoryId?: string;
 }

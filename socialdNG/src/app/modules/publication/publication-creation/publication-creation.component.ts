@@ -28,7 +28,7 @@ export class PublicationCreationComponent implements OnInit {
     this.fgValidator = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(10)]],
       description: ['', [Validators.required]],
-      categoryIds: [[], [Validators.required]],
+      categoryId: ['', [Validators.required]],
     });
 
     this.categoryService.getAllRecords().subscribe(res => this.categoryIds = res);
@@ -43,14 +43,10 @@ export class PublicationCreationComponent implements OnInit {
       this.publicationService.postPublication(model)
       .subscribe(
         res =>{
-          this.publicationService.linkPublicationWithCategories(res.id, model.categories)
-            .subscribe(catRes => {
-              showMessage("Post created!")
-              this.router.navigate(['/publication'])
-            }, () => {
-              showMessage("Error al guardar las categorias.")
-            })
+          console.log(res);
 
+          showMessage("Post created!")
+          this.router.navigate(['/publication'])
       },
       () =>{
         showMessage("Error al guardar el post.")
@@ -62,7 +58,7 @@ export class PublicationCreationComponent implements OnInit {
     let model = new PublicationModel();
     model.name = this.fgv.name.value;
     model.description = this.fgv.description.value;
-    model.categories = this.fgv.categoryIds.value;
+    model.categoryId = this.fgv.categoryId.value;
 
     return model;
   }

@@ -27,7 +27,7 @@
     <div class="row">
       <div class="col s5">
         <label for="categoryIds">Categories</label>
-        <select formControlName="categoryIds" name="categoryIds" id="categories" class="validate" multiple required>
+        <select formControlName="categoryId" name="categoryIds" id="categories" class="validate" required>
           <option *ngFor="let cat of categoryIds" value="{{cat.id}}"> {{ cat.name }} </option>
         </select>
       </div>
