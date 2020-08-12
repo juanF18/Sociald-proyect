@@ -8,11 +8,13 @@
             <a href="#email"><span class="white-text email">{{email}}</span></a>
         </div>
         <a class="waves-effect" routerLink="security/edit-profile">Edit Profile</a>
-        
     </li>
-    <li>
-        <div class="divider"></div>
-    </li>
+    <li><div class="divider"></div></li>
+    <div *ngIf="isLogged && role.toLowerCase() == 'person'">
+      <li>
+        <a class="waves-effect" routerLink="publication">Publications</a>
+      </li>
+    </div>
     <li><a *ngIf="isLogged && role.toLowerCase() == 'admin'" class="subheader">Parameters</a></li>
     <li><a *ngIf="isLogged && role.toLowerCase() == 'admin'" class="waves-effect" routerLink="parameters/area-list">Area</a></li>
     <li><a *ngIf="isLogged && role.toLowerCase() == 'admin'" class="waves-effect" routerLink="parameters/category-list">Category</a></li>

@@ -7,20 +7,20 @@ import { PublicationRemoveComponent } from './publication-remove/publication-rem
 
 const routes: Routes = [
   {
-    path:'publitacion-creation',
+    path:'creation',
     component: PublicationCreationComponent
   },
   {
-    path:'publitacion-edition',
+    path:'edition',
     component: PublicationEditionComponent
   },
   {
-    path:'publitacion-list',
-    component: PublicationListComponent
+    path:'remove',
+    component: PublicationRemoveComponent
   },
   {
-    path:'publitacion-remove',
-    component: PublicationRemoveComponent
+    path:'**',
+    component: PublicationListComponent
   },
 ];
 
