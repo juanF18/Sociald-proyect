@@ -32,6 +32,8 @@ export class PersonController {
     public userRepository: UserRepository,
     @service(MyUserService)
     public userService: MyUserService,
+    @service(NotificationService)
+    public notificationService: NotificationService,
   ) {}
 
   @post('/person', {
@@ -91,7 +93,7 @@ export class PersonController {
       to: email,
     });
 
-    let sendEmail: boolean = await new NotificationService().EmailNotification(
+    let sendEmail: boolean = await this.notificationService.EmailNotification(
       emailData,
     );
 

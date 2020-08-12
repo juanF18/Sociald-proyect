@@ -1,8 +1,10 @@
 import {NotificationDatasource as ND} from '../datasources/notification.datasource';
 import {EmailNotification, SmsNotification} from '../models';
+import { bind, BindingScope } from '@loopback/core';
 const twilio = require('twilio');
 const sgMail = require('@sendgrid/mail');
 
+@bind({scope: BindingScope.TRANSIENT})
 export class NotificationService {
   async SmsNotification(notificartion: SmsNotification): Promise<boolean> {
     try {

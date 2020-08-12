@@ -40,7 +40,9 @@ export class CompanyController {
     @repository(UserRepository)
     public userRepository: UserRepository,
     @service(MyUserService)
-    public userService: MyUserService
+    public userService: MyUserService,
+    @service(NotificationService)
+    public notificationService: NotificationService,
   ) {}
 
   @post('/company', {
@@ -98,7 +100,7 @@ export class CompanyController {
       to: email,
     });
 
-    let sendEmail: boolean = await new NotificationService().EmailNotification(
+    let sendEmail: boolean = await this.notificationService.EmailNotification(
       emailData,
     );
 
