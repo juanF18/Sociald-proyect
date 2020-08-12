@@ -16,7 +16,7 @@ export class CaregoryService {
     private http: HttpClient,
     private security: SecurityService,
 
-  ) { 
+  ) {
     this.token = security.getToken()
   }
 
@@ -54,7 +54,7 @@ export class CaregoryService {
    * @param record
    */
   editRecord(record: CategoryModel): Observable<CategoryModel> {
-    return this.http.put<CategoryModel>(
+    return this.http.patch<CategoryModel>(
       `${ServiceConfig.BASE_URL}${this.entity}/${record.id}`,
       record,
       {
