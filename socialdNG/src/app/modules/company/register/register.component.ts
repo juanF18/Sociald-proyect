@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { FormsConfig as fconfig } from 'src/app/config/forms-config';
 import { CompanyService } from "../../../services/company.service";
 import { CompanyModel } from "../../../models/company.model";
-//import { CompanyUploads } from '../../upload-img/cloud-img/cloud-img.component'
-
+import { CloudImgService } from "../../../services/cloud-service/cloud-img.service";
 
 declare const showMessage: any;
 @Component({
@@ -26,12 +25,13 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb:FormBuilder,
     private service: CompanyService,
-    private router: Router
+    private router: Router,
+    private serviceImg: CloudImgService
   ) { }
 
   ngOnInit(): void {
     this.FormBuilding()
-
+    this.fgv.profilePicPath.setValue(this.serviceImg.getPublicId())
   }
   FormBuilding() {
     this.fgValidator = this.fb.group({
@@ -42,6 +42,7 @@ export class RegisterComponent implements OnInit {
       adress:['',[Validators.required, Validators.minLength(this.adressMinLength)]],
       password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]],
       postalCode:['',[ Validators.minLength(this.postalCodeMinLength)]],
+      profilePicPath:['']
     });
   }
 
@@ -69,6 +70,7 @@ export class RegisterComponent implements OnInit {
     model.email = this.fgv.email.value;
     model.adress = this.fgv.adress.value;
     model.password = this.fgv.password.value;
+    model.profilePicPath = this.fgv.profilePicPath.value;
     return model;
   }
 

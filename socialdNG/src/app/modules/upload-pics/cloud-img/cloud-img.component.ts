@@ -5,12 +5,16 @@ import {
   FileUploaderOptions,
   FileSelectDirective
 } from 'ng2-file-upload';
+import { Location } from "@angular/common";
 import { Cloudinary } from '@cloudinary/angular-5.x';
 import { HttpClient } from '@angular/common/http';
 import { cloud } from '../../../config/cloudinary-config';
 import { FormBuilder } from '@angular/forms';
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
-
+import { CloudImgService } from "../../../services/cloud-service/cloud-img.service";
+declare const showMessage:any
+declare const showRemoveImgConfirmation:any
+declare const closeModal:any
 
 @Component({
   selector: 'app-cloud-img',
@@ -30,7 +34,9 @@ export class CloudImgComponent implements OnInit {
     public cloudinary: Cloudinary,
     public zone: NgZone,
     public http: HttpClient,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public service: CloudImgService,
+    private location: Location
   ) {
     this.responses = [];
     this.title = '';
@@ -104,7 +110,9 @@ export class CloudImgComponent implements OnInit {
           progress,
           data: {},
         });
-      this.img_id = JSON.parse(response).public_id;
+      this.service.dataFromImg(JSON.parse(response))
+      showMessage('the img was uploaded successfully')
+      this.setImgId(this.service.getPublicId())
     };
   }
 
@@ -130,8 +138,22 @@ export class CloudImgComponent implements OnInit {
       console.log(`Deleted image - ${data.public_id} ${response.result}`);
       this.responses.splice(index, 1);
     });
-    this.setImgId('')
+    
+    this.service.setPublicId('')
+    this.setImgId(this.service.getPublicId())
   };
+
+  showConfirmRemove(){
+    showRemoveImgConfirmation()
+  }
+
+  goBack(){
+    this.location.back()
+  }
+
+  closeImgModa(){
+    closeModal('removeImgCofirmation')
+  }
 
   fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;

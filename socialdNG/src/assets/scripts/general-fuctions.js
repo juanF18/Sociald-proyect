@@ -10,6 +10,11 @@ function showRemoveConfirmation() {
   let instances = M.Modal.init(elem, {});
   instances.open();
 }
+function showRemoveImgConfirmation() {
+  let elem = document.querySelector("#removeImgCofirmation");
+  let instances = M.Modal.init(elem, {});
+  instances.open();
+}
 
 function closeModal(idModal){
   let elem = document.querySelector("#"+idModal);

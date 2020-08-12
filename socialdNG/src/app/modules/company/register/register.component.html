@@ -1,8 +1,9 @@
 <div class="col s12 z-depth-6 card-panel">
     <form [formGroup]="fgValidator" class="col s4" id="reg-form">
         <div class="row">
-            <div class="input-file col s3">
-                
+            <div class="container col s12">
+                <a routerLink="/upload-pics/upload-img" class="waves-effect green btn ">Upload Pic</a>
+                <input id="profilePicPath" formControlName="profilePicPath" type="hidden" class="validate">
             </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>

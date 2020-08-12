@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { FormsConfig as fconfig } from '../../../config/forms-config';
 import { PersonService } from '../../../services/person.service';
 import { PersonModel } from 'src/app/models/person.model';
+import { CloudImgService } from "../../../services/cloud-service/cloud-img.service";
 declare const showMessage: any;
-declare const showUploadModal: any;
 
 @Component({
   selector: 'app-register',
@@ -26,11 +26,16 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private service: PersonService,
     private router: Router,
+    private serviceImg: CloudImgService
     
   ) { }
 
   ngOnInit(): void {
     this.FormBuilding();
+    if(this.serviceImg.public_id){
+      this.fgv.profilePicPath.setValue(this.serviceImg.getPublicId())
+      this.profile_pic = this.serviceImg.getPublicId()
+    }
   }
 
   FormBuilding() {
@@ -56,6 +61,7 @@ export class RegisterComponent implements OnInit {
           showMessage(
             'Registro guardado con exito, su contraseña esta en el correo.'
           );
+          this.profile_pic = ''
           this.router.navigate(['/security/login']);
         },
         (error) => {
@@ -78,9 +84,6 @@ export class RegisterComponent implements OnInit {
     return model;
   }
 
-  showModalUpload(){
-    showUploadModal()
-  }
 
   get fgv() {
     return this.fgValidator.controls;

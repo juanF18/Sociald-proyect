@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { PersonRoutingModule } from './person-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { FileUploadModule } from "ng2-file-upload";
+import {CloudinaryModule, } from '@cloudinary/angular-5.x'
 
 
 
@@ -13,6 +15,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     CommonModule,
     PersonRoutingModule,
     ReactiveFormsModule,
+    FileUploadModule,
+    CloudinaryModule
   ],
   
 })

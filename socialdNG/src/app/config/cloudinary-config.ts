@@ -8,5 +8,5 @@ export namespace cloud {
     export const config: CloudinaryConfiguration ={
         cloud_name:CLOUD_NAME,
         upload_preset:UPLOAD_PRESET,
-      }
-}
+      } 
+} 

@@ -1,42 +1,70 @@
 <h3>Upload pic</h3>
 &nbsp;
 &nbsp;
-<div class="col s12 z-depth-6 card-panel">
-    <fieldset>
-        <div class="input-file col s12" id="direct_upload" ng2FileDrop [uploader]="uploader"
-            (fileOver)="fileOverBase($event)" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}">
-            <form>
-                <div class="row">
-                    <div class="input-file col s7">
-                        <cl-image *ngIf="this.img_id" public-id="{{this.img_id}}" class="thumbnail inline" format="jpg">
-                            <cl-transformation height="150" width="150" crop="crop" radius="50">
-                            </cl-transformation>
-                        </cl-image>
-                    </div>
-                    <div class="form_line col s5">
-                        <label for=""><strong>Please select a photo or image</strong></label>
+<div class="container">
+    <div class="col s12 z-depth-6 card-panel">
+        <fieldset>
+            <div class="input-file col s12" id="direct_upload" ng2FileDrop [uploader]="uploader"
+                (fileOver)="fileOverBase($event)" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}">
+                <form>
+                    <div class="row">
+                        <div class="input-file col s5">
+                            <fieldset id="imgZone">
+                                <cl-image *ngIf="this.img_id" public-id="{{this.img_id}}" class="thumbnail inline"
+                                    format="jpg">
+                                    <cl-transformation height="180" width="180" crop="crop" radius="50">
+                                    </cl-transformation>
+                                </cl-image>
+                            </fieldset>
+                        </div>
+                        <div class="form_line col s12">
+                            <label  *ngIf="!this.img_id" for=""><strong>Please select a photo or image</strong></label>
                             &nbsp;
                             &nbsp;
-                        <div class="form_controls row">
-                            <div class="upload_button_holder col s6">
-                                <!-- <label class="upload_button" for="fileupload">Please select a photo or image</label> -->
-                                <span id="spanInput">
-                                    <input id="fileupload" type="file" #fileInput ng2FileSelect [style.display]="'none'"
-                                    [uploader]="uploader" (change)="fileInput.value=''" />
-                                </span>
-                                <button (click)="fileInput.click()" class="btn green">Upload</button>
-                            </div>
-                            <div class="file" *ngFor="let response of responses; let i = index">
-                                <button class="btn red" *ngIf="!!response.data.delete_token"
-                                    (click)="deleteImage(response.data, i)">Delete
-                                    image</button>
-                                <h6>{{response.file.name}}</h6>
-                                <p class="green-text" *ngIf="response.file.name">Uploaded!!</p>
+                            <div class="form_controls row">
+                                <div class="upload_button_holder col s12">
+                                    <!-- <label class="upload_button" for="fileupload">Please select a photo or image</label> -->
+                                    <span id="spanInput">
+                                        <input id="fileupload" type="file" #fileInput ng2FileSelect
+                                            [style.display]="'none'" [uploader]="uploader"
+                                            (change)="fileInput.value=''" />
+                                    </span>
+                                    <button *ngIf="!this.img_id" (click)="fileInput.click()"
+                                        class="btn green">Upload</button>
+                                    &nbsp;&nbsp;
+                                    <button *ngIf="this.img_id" (click)="showConfirmRemove()"
+                                        class="btn waves-effect red darken-4 " type="submit" name="action"><i
+                                            class="material-icons">delete</i></button>
+                                    &nbsp;&nbsp;
+                                    <button *ngIf="this.img_id" (click)="goBack()"
+                                        class="btn waves-effect green" type="submit" name="action">Save<i
+                                            class="material-icons">save</i></button>
+                                </div>
+                                <div class="file col s12" *ngFor="let response of responses; let i = index">
+                                    <h6>{{response.file.name}}</h6>
+                                    <p class="green-text" *ngIf="response.file.name">Uploaded!!</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<!--Modal confirm delet-->
+<div id="removeImgCofirmation" class="modal">
+    <div class="modal-content">
+        <h4>Remove Cofirmation</h4>
+        <h6>
+            <p>Are you sure to delete the Img?</p>
+        </h6>
+    </div>
+    <div class="modal-footer">
+        <div class="file col s6" *ngFor="let response of responses; let i = index">
+            <button class="btn waves-effect red darken-4" type="submit" name="action"
+                (click)="[deleteImage(response.data, i), closeImgModa()]">Delete image</button>
+            <a class="modal-close waves-effect btn-flat">Close</a>
         </div>
-    </fieldset>
+    </div>
 </div>
