@@ -21,6 +21,7 @@ import {PublicationRequest, EmailNotification} from '../models';
 import {PublicationRequestRepository, CompanyRepository, PublicationRepository, UserRepository} from '../repositories';
 import { service } from '@loopback/core';
 import { NotificationService } from '../services';
+import { authenticate } from '@loopback/authentication';
 
 export class PublicationRequestController {
   constructor(
@@ -36,6 +37,7 @@ export class PublicationRequestController {
     protected notificationService : NotificationService,
   ) {}
 
+  @authenticate('socialdjwt')
   @post('/publication-request', {
     responses: {
       '200': {
