@@ -15,6 +15,7 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {PublicationRequest, EmailNotification} from '../models';
 import {PublicationRequestRepository, CompanyRepository, PublicationRepository, UserRepository} from '../repositories';
@@ -63,6 +64,15 @@ export class PublicationRequestController {
         personId: publication.personId,
       }
     });
+
+    if(await this.publicationRequestRepository.find({
+      where: {
+        companyId: publicationRequest.companyId,
+        publicationId: publicationRequest.publicationId,
+      }
+    })){
+      throw new HttpErrors[400]('Ya has contactado esta publicacion');
+    }
 
     let mail = new EmailNotification({
       to: user?.email,
