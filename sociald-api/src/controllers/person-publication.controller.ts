@@ -5,6 +5,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
+import {authenticate} from '@loopback/authentication';
 import {
   del,
   get,
@@ -29,6 +30,7 @@ export class PersonPublicationController {
     @service(CodeGeneratorService) protected codeGeneratorService: CodeGeneratorService,
   ) { }
 
+  @authenticate('socialdjwt')
   @get('/people/{id}/publications', {
     responses: {
       '200': {
@@ -48,6 +50,7 @@ export class PersonPublicationController {
     return this.personRepository.publications(id).find(filter);
   }
 
+  @authenticate('socialdjwt')
   @post('/people/{id}/publications', {
     responses: {
       '200': {
@@ -80,6 +83,7 @@ export class PersonPublicationController {
     return this.personRepository.publications(id).create(withCode);
   }
 
+  @authenticate('socialdjwt')
   @patch('/people/{id}/publications', {
     responses: {
       '200': {
@@ -103,6 +107,7 @@ export class PersonPublicationController {
     return this.personRepository.publications(id).patch(publication, where);
   }
 
+  @authenticate('socialdjwt')
   @del('/people/{id}/publications', {
     responses: {
       '200': {
