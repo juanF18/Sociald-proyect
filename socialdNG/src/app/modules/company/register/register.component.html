@@ -26,16 +26,16 @@
                         This field must be at least {{phoneMinLength}} long.
                     </strong>
                 </div>
-            </div>  
+            </div>
             <div class="input-field col s4">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="nit" formControlName="nit" type="text" class="validate" required>
                 <label for="nit">Nit</label>
-                <div class="warning-validator" *ngIf="fgv.code.errors && (fgv.code.dirty || fgv.code.touched)">
-                    <strong *ngIf="fgv.code.errors.required">
+                <div class="warning-validator" *ngIf="fgv.nit.errors && (fgv.nit.dirty || fgv.nit.touched)">
+                    <strong *ngIf="fgv.nit.errors.required">
                         This field is required.
                     </strong>
-                    <strong *ngIf="fgv.code.errors.minlength">
+                    <strong *ngIf="fgv.nit.errors.minlength">
                         This field must be at least {{codeMinLength}} long.
                     </strong>
                 </div>
@@ -57,14 +57,14 @@
             </div>
             <div class="input-field col s4">
                 <i class="material-icons prefix">phone</i>
-                <input id="adress" type="text" formControlName="adress" class="validate" required>
-                <label for="adress">Adress</label>
-                <div class="warning-validator" *ngIf="fgv.adress.errors && (fgv.adress.dirty || fgv.adress.touched)">
-                    <strong *ngIf="fgv.adress.errors.required">
+                <input id="address" type="text" formControlName="address" class="validate" required>
+                <label for="address">Address</label>
+                <div class="warning-validator" *ngIf="fgv.address.errors && (fgv.address.dirty || fgv.address.touched)">
+                    <strong *ngIf="fgv.address.errors.required">
                         This field is required.
                     </strong>
-                    <strong *ngIf="fgv.adress.errors.minlength">
-                        This field must be at least {{adressMinLength}} long.
+                    <strong *ngIf="fgv.address.errors.minlength">
+                        This field must be at least {{addressMinLength}} long.
                     </strong>
                 </div>
             </div>

@@ -10,7 +10,7 @@
         <a class="waves-effect" routerLink="security/edit-profile">Edit Profile</a>
     </li>
     <li><div class="divider"></div></li>
-    <div *ngIf="isLogged && role.toLowerCase() == 'person'">
+    <div *ngIf="isLogged && role.toLowerCase() != 'admin'">
       <li>
         <a class="waves-effect" routerLink="publication">Publications</a>
       </li>

@@ -1,10 +1,10 @@
 export class CompanyModel{
     id?: string;
-    nit: string;
+    nit: number;
     name: string;
     email: string;
     phone: string;
-    adress:string;
+    address:string;
     password:string;
     postalCode?:string;
     profilePicPath?:string;
