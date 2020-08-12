@@ -8,4 +8,5 @@ export class PublicationModel{
     status: boolean = false;
     publicationPicPath?:string;
     categoryId?: string;
+    category?: object;
 }
