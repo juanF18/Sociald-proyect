@@ -52,7 +52,7 @@ export class PersonController {
     const {email, password, ...personBody} = body;
     const role = 'person';
 
-    const searchEmail = this.userRepository.findOne({
+    const searchEmail = await this.userRepository.findOne({
       where: {
         email: email
       }

@@ -61,7 +61,7 @@ export class CompanyController {
     const {email, password, ...companyBody} = body;
     const role = 'company';
 
-    const searchEmail = this.userRepository.findOne({
+    const searchEmail = await this.userRepository.findOne({
       where: {
         email: email
       }
