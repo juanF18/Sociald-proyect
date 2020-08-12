@@ -6,13 +6,17 @@ import { PublicationListComponent } from './publication-list/publication-list.co
 import { PublicationEditionComponent } from './publication-edition/publication-edition.component';
 import { PublicationRemoveComponent } from './publication-remove/publication-remove.component';
 import { PublicationCreationComponent } from './publication-creation/publication-creation.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
   declarations: [PublicationListComponent, PublicationEditionComponent, PublicationRemoveComponent, PublicationCreationComponent],
   imports: [
     CommonModule,
-    PublicationRoutingModule
+    PublicationRoutingModule,
+    ReactiveFormsModule,
+    NgxPaginationModule,
   ]
 })
 export class PublicationModule { }

@@ -1,8 +1,12 @@
+import {CategoryModel} from './category.model';
+
 export class PublicationModel{
     id?:string;
     code?: string;
     name: string;
     description:string;
-    status: Boolean = false;
+    status: boolean = false;
     publicationPicPath?:string;
+    categories?: string[];
+    // categoriesRaw?: string[];
 }
