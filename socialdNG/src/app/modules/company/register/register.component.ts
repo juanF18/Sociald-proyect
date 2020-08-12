@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { FormsConfig as fconfig } from 'src/app/config/forms-config';
 import { CompanyService } from "../../../services/company.service";
 import { CompanyModel } from "../../../models/company.model";
+//import { CompanyUploads } from '../../upload-img/cloud-img/cloud-img.component'
+
+
 declare const showMessage: any;
 @Component({
   selector: 'app-register',

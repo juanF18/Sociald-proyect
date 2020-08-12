@@ -1,4 +1,3 @@
-
 function showMessage(message) {
   document.querySelector("#textMessage").innerHTML = message;
   let elem = document.querySelector("#messageModal");
@@ -19,3 +18,10 @@ function closeModal(idModal){
   });
 }
 
+function showUploadModal() {
+  let elem = document.querySelector("#uploadModal");
+  let instances = M.Modal.init(elem, {
+    dismissible: false
+  });
+  instances.open();
+}

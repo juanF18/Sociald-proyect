@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { CompanyRoutingModule } from './company-routing.module';
 import { RegisterComponent } from './register/register.component';
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+
 
 @NgModule({
   declarations: [RegisterComponent],
   imports: [
     CommonModule,
     CompanyRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,    
   ]
 })
 export class CompanyModule { }

@@ -1,0 +1,42 @@
+<h3>Upload pic</h3>
+&nbsp;
+&nbsp;
+<div class="col s12 z-depth-6 card-panel">
+    <fieldset>
+        <div class="input-file col s12" id="direct_upload" ng2FileDrop [uploader]="uploader"
+            (fileOver)="fileOverBase($event)" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}">
+            <form>
+                <div class="row">
+                    <div class="input-file col s7">
+                        <cl-image *ngIf="this.img_id" public-id="{{this.img_id}}" class="thumbnail inline" format="jpg">
+                            <cl-transformation height="150" width="150" crop="crop" radius="50">
+                            </cl-transformation>
+                        </cl-image>
+                    </div>
+                    <div class="form_line col s5">
+                        <label for=""><strong>Please select a photo or image</strong></label>
+                            &nbsp;
+                            &nbsp;
+                        <div class="form_controls row">
+                            <div class="upload_button_holder col s6">
+                                <!-- <label class="upload_button" for="fileupload">Please select a photo or image</label> -->
+                                <span id="spanInput">
+                                    <input id="fileupload" type="file" #fileInput ng2FileSelect [style.display]="'none'"
+                                    [uploader]="uploader" (change)="fileInput.value=''" />
+                                </span>
+                                <button (click)="fileInput.click()" class="btn green">Upload</button>
+                            </div>
+                            <div class="file" *ngFor="let response of responses; let i = index">
+                                <button class="btn red" *ngIf="!!response.data.delete_token"
+                                    (click)="deleteImage(response.data, i)">Delete
+                                    image</button>
+                                <h6>{{response.file.name}}</h6>
+                                <p class="green-text" *ngIf="response.file.name">Uploaded!!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </fieldset>
+</div>

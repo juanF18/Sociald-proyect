@@ -30,6 +30,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/company/company.module').then(m => m.CompanyModule)
   },
   {
+    path:'upload-pics',
+    loadChildren: () => import('./modules/upload-pics/upload-pics.module').then(m => m.UploadPicsModule)
+  },
+  {
     path:'**',
     redirectTo:'/home'
   }

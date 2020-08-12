@@ -6,9 +6,12 @@ import { DefaultComponent } from './public/home/default/default.component';
 import { SideMenuComponent } from './public/master-page/side-menu/side-menu.component';
 import { HeroComponent } from './public/master-page/hero/hero.component';
 import { FooterComponent } from './public/master-page/footer/footer.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NavBarComponent } from './public/master-page/nav-bar/nav-bar.component';
 import { HttpClientModule } from "@angular/common/http";
+import { FileUploader, FileSelectDirective } from 'ng2-file-upload';
+
+
 
 @NgModule({
   declarations: [
@@ -18,12 +21,14 @@ import { HttpClientModule } from "@angular/common/http";
     HeroComponent,
     FooterComponent,
     NavBarComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

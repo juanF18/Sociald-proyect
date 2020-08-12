@@ -1,6 +1,9 @@
 <div class="col s12 z-depth-6 card-panel">
     <form [formGroup]="fgValidator" class="col s4" id="reg-form">
         <div class="row">
+            <div class="input-file col s3">
+                
+            </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
                 <input id="name" formControlName="name" type="text" class="validate" required>
@@ -26,16 +29,16 @@
                         This field must be at least {{phoneMinLength}} long.
                     </strong>
                 </div>
-            </div>  
+            </div>
             <div class="input-field col s4">
                 <i class="material-icons prefix">perm_identity</i>
                 <input id="nit" formControlName="nit" type="text" class="validate" required>
                 <label for="nit">Nit</label>
-                <div class="warning-validator" *ngIf="fgv.code.errors && (fgv.code.dirty || fgv.code.touched)">
-                    <strong *ngIf="fgv.code.errors.required">
+                <div class="warning-validator" *ngIf="fgv.nit.errors && (fgv.nit.dirty || fgv.nit.touched)">
+                    <strong *ngIf="fgv.nit.errors.required">
                         This field is required.
                     </strong>
-                    <strong *ngIf="fgv.code.errors.minlength">
+                    <strong *ngIf="fgv.nit.errors.minlength">
                         This field must be at least {{codeMinLength}} long.
                     </strong>
                 </div>
@@ -72,7 +75,8 @@
                 <i class="material-icons prefix">phone</i>
                 <input id="postalCode" type="text" formControlName="postalCode" class="validate" required>
                 <label for="postalCode">Postal Code</label>
-                <div class="warning-validator" *ngIf="fgv.postalCode.errors && (fgv.postalCode.dirty || fgv.postalCode.touched)">
+                <div class="warning-validator"
+                    *ngIf="fgv.postalCode.errors && (fgv.postalCode.dirty || fgv.postalCode.touched)">
                     <strong *ngIf="fgv.postalCode.errors.required">
                         This field is required.
                     </strong>
@@ -85,7 +89,8 @@
                 <i class="material-icons prefix">security</i>
                 <input id="password" type="password" formControlName="password" class="validate" required>
                 <label for="password">Password</label>
-                <div class="warning-validator" *ngIf="fgv.password.errors && (fgv.password.dirty || fgv.password.touched)">
+                <div class="warning-validator"
+                    *ngIf="fgv.password.errors && (fgv.password.dirty || fgv.password.touched)">
                     <strong *ngIf="fgv.password.errors.required">
                         This field is required.
                     </strong>
@@ -101,3 +106,4 @@
         </div>
     </form>
 </div>
+
