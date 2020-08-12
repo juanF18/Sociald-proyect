@@ -16,13 +16,23 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {PublicationRequest} from '../models';
-import {PublicationRequestRepository} from '../repositories';
+import {PublicationRequest, EmailNotification} from '../models';
+import {PublicationRequestRepository, CompanyRepository, PublicationRepository, UserRepository} from '../repositories';
+import { service } from '@loopback/core';
+import { NotificationService } from '../services';
 
 export class PublicationRequestController {
   constructor(
     @repository(PublicationRequestRepository)
     public publicationRequestRepository : PublicationRequestRepository,
+    @repository(CompanyRepository)
+    public companyRepository : CompanyRepository,
+    @repository(PublicationRepository)
+    public publicationRepository : PublicationRepository,
+    @repository(UserRepository)
+    public userRepository : UserRepository,
+    @service(NotificationService)
+    protected notificationService : NotificationService,
   ) {}
 
   @post('/publication-request', {
@@ -46,6 +56,29 @@ export class PublicationRequestController {
     })
     publicationRequest: Omit<PublicationRequest, 'id'>,
   ): Promise<PublicationRequest> {
+    let publication = await this.publicationRepository.findById(publicationRequest.publicationId);
+    let company = await this.companyRepository.findById(publicationRequest.companyId);
+    let user = await this.userRepository.findOne({
+      where: {
+        personId: publication.personId,
+      }
+    });
+
+    let mail = new EmailNotification({
+      to: user?.email,
+      subject: `${company.name} quiere contratar tus servicios!`,
+      body: `${company.name} quiere contratar tus servicios!`,
+      text: publicationRequest.message,
+    });
+
+    let mailResponse = await this.notificationService.EmailNotification(mail);
+
+    if(mailResponse) {
+      console.log("Email send");
+    }else{
+      console.error("No se pudo enviar el email");
+    }
+
     return this.publicationRequestRepository.create(publicationRequest);
   }
 
