@@ -11,7 +11,7 @@ const routes: Routes = [
     component: PublicationCreationComponent
   },
   {
-    path:'edition',
+    path:'edition/:id',
     component: PublicationEditionComponent
   },
   {

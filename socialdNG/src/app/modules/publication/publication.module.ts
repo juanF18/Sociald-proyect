@@ -9,6 +9,8 @@ import { PublicationCreationComponent } from './publication-creation/publication
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import {MatChipsModule} from '@angular/material/chips';
     ReactiveFormsModule,
     NgxPaginationModule,
     MatChipsModule,
+    MatFormFieldModule,
+    MatInputModule,
   ]
 })
 export class PublicationModule { }
