@@ -20,10 +20,13 @@ import {
   Publication,
 } from '../models';
 import {PersonRepository} from '../repositories';
+import { service } from '@loopback/core';
+import { CodeGeneratorService } from '../services';
 
 export class PersonPublicationController {
   constructor(
     @repository(PersonRepository) protected personRepository: PersonRepository,
+    @service(CodeGeneratorService) protected codeGeneratorService: CodeGeneratorService,
   ) { }
 
   @get('/people/{id}/publications', {
@@ -60,14 +63,21 @@ export class PersonPublicationController {
         'application/json': {
           schema: getModelSchemaRef(Publication, {
             title: 'NewPublicationInPerson',
-            exclude: ['id'],
+            exclude: ['id', 'code'],
             optional: ['personId']
           }),
         },
       },
     }) publication: Omit<Publication, 'id'>,
   ): Promise<Publication> {
-    return this.personRepository.publications(id).create(publication);
+    let count = Math.ceil(Math.random() * 1000);
+
+    let withCode = {
+      ...publication,
+      code: await this.codeGeneratorService.genNextCode(count),
+    };
+
+    return this.personRepository.publications(id).create(withCode);
   }
 
   @patch('/people/{id}/publications', {
