@@ -25,7 +25,7 @@ export class CaregoryService {
    */
   getAllRecords(): Observable<CategoryModel[]> {
     return this.http.get<CategoryModel[]>(
-      `${ServiceConfig.BASE_URL}${this.entity}`
+      `${ServiceConfig.BASE_URL}${this.entity}?filter=%7B%0A%20%20%22include%22%3A%20%5B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%22relation%22%3A%20%22area%22%0A%20%20%20%20%7D%0A%20%20%5D%0A%7D`
     );
   }
 
