@@ -15,14 +15,19 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {Skill} from '../models';
 import {SkillRepository} from '../repositories';
+import { service } from '@loopback/core';
+import { CodeGeneratorService } from '../services';
 
 export class SkillController {
   constructor(
     @repository(SkillRepository)
     public skillRepository : SkillRepository,
+    @service(CodeGeneratorService)
+    private codeGeneratorService: CodeGeneratorService,
   ) {}
 
   @post('/skill', {
@@ -46,6 +51,21 @@ export class SkillController {
     })
     skill: Omit<Skill, 'id'>,
   ): Promise<Skill> {
+    let searchName = await this.skillRepository.findOne({
+      where: { name: skill.name }
+    });
+
+    if(searchName) {
+      throw new HttpErrors.UnprocessableEntity("This skill name already exists!")
+    }
+
+    let count = (await this.skillRepository.count()).count;
+
+    let withCode = {
+      ...skill,
+      code: await this.codeGeneratorService.genNextCode(count),
+    };
+
     return this.skillRepository.create(skill);
   }
 

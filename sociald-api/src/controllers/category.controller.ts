@@ -56,7 +56,7 @@ export class CategoryController {
     });
 
     if(searchName) {
-      throw new HttpErrors.UnprocessableEntity("This area name already exists!")
+      throw new HttpErrors.UnprocessableEntity("This category name already exists!")
     }
 
     let count = (await this.categoryRepository.count()).count;

@@ -56,7 +56,7 @@ export class PublicationController {
     });
 
     if(searchName) {
-      throw new HttpErrors.UnprocessableEntity("This area name already exists!")
+      throw new HttpErrors.UnprocessableEntity("This publication name already exists!")
     }
 
     let count = (await this.publicationRepository.count()).count;
