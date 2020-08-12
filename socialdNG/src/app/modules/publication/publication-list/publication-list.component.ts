@@ -14,18 +14,29 @@ export class PublicationListComponent implements OnInit {
   p: number;
   recordList: PublicationModel[];
   idToRemove: string;
+  currentUser: any;
 
   constructor(
     private publicationService: PublicationService
   ) {
     this.p = 1;
+    this.currentUser = this.publicationService.currentUser;
   }
 
   ngOnInit(): void {
-    this.publicationService.getAllMyPublications()
-      .subscribe(res => {
-        this.recordList = res;
-      })
+    console.log(this.currentUser.role);
+
+    if(this.currentUser.role == 'person'){
+      this.publicationService.getAllMyPublications()
+        .subscribe(res => {
+          this.recordList = res;
+        });
+      }else{
+        this.publicationService.getAllPublications()
+          .subscribe(res => {
+            this.recordList = res;
+          });
+    }
   }
 
   removeConfirmation(id) {

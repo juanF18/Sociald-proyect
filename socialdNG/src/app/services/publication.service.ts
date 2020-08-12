@@ -23,7 +23,7 @@ export class PublicationService {
 
   getAllPublications(): Observable<PublicationModel[]> {
     return this.http.get<PublicationModel[]>(
-      `${ServiceConfig.BASE_URL}publications`,
+      `${ServiceConfig.BASE_URL}publication?filter={ "include": [ { "relation": "category" }, { "relation": "person" } ] }`,
       {
         headers: new HttpHeaders({
           Authorization: `Bearer ${this.token}`,
