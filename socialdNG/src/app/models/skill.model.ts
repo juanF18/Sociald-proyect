@@ -1,6 +1,6 @@
 export class SkillModel{
     id?:string;
-    code:string;
+    code?:string;
     name:string;
     description:string;
 }

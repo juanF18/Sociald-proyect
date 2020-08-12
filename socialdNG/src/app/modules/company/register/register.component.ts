@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
   codeMinLength = fconfig.CODE_MIN_LENGTH;
   nameMinLength = fconfig.NAME_MIN_LENGTH;
   passwordMinLength = fconfig.PASSWORD_MIN_LENGTH;
-  adressMinLength = fconfig.ADRESS_MIN_LENGTH;
+  addressMinLength = fconfig.ADRESS_MIN_LENGTH;
   postalCodeMinLength = fconfig.POSTALCOD_MIN_LENGTH;
   phoneMinLength = fconfig.PHONE_MIN_LENGTH;
   phoneMaxLength = fconfig.PHONE_MAX_LENGTH;
@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(this.nameMinLength)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['',[Validators.required, Validators.minLength(this.phoneMinLength), Validators.maxLength(this.phoneMaxLength)]],
-      adress:['',[Validators.required, Validators.minLength(this.adressMinLength)]],
+      address:['',[Validators.required, Validators.minLength(this.addressMinLength)]],
       password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]],
       postalCode:['',[ Validators.minLength(this.postalCodeMinLength)]],
       profilePicPath:['']
@@ -60,17 +60,18 @@ export class RegisterComponent implements OnInit {
       error =>{
         showMessage("Error al registrar.")
       });
-    } 
+    }
   }
 
   getCompanyData(): CompanyModel{
     let model = new CompanyModel();
-    model.nit = this.fgv.code.value;
+    model.nit = parseInt(this.fgv.nit.value);
     model.name= this.fgv.name.value;
     model.email = this.fgv.email.value;
-    model.adress = this.fgv.adress.value;
+    model.address = this.fgv.address.value;
     model.password = this.fgv.password.value;
     model.profilePicPath = this.fgv.profilePicPath.value;
+    model.phone = this.fgv.phone.value;
     return model;
   }
 

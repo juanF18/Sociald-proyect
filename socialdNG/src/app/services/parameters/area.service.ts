@@ -48,7 +48,7 @@ export class AreaService {
    * @param record
    */
   editRecord(record: AreaModel): Observable<AreaModel> {
-    return this.http.put<AreaModel>(
+    return this.http.patch<AreaModel>(
       `${ServiceConfig.BASE_URL}${this.entity}/${record.id}`,
       record,
       {

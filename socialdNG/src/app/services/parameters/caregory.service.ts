@@ -16,7 +16,7 @@ export class CaregoryService {
     private http: HttpClient,
     private security: SecurityService,
 
-  ) { 
+  ) {
     this.token = security.getToken()
   }
 
@@ -25,7 +25,7 @@ export class CaregoryService {
    */
   getAllRecords(): Observable<CategoryModel[]> {
     return this.http.get<CategoryModel[]>(
-      `${ServiceConfig.BASE_URL}${this.entity}`
+      `${ServiceConfig.BASE_URL}${this.entity}?filter=%7B%0A%20%20%22include%22%3A%20%5B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%22relation%22%3A%20%22area%22%0A%20%20%20%20%7D%0A%20%20%5D%0A%7D`
     );
   }
 
@@ -44,7 +44,7 @@ export class CaregoryService {
       record,
       {
         headers: new HttpHeaders({
-          Authorizacion: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         }),
       }
     );
@@ -54,12 +54,12 @@ export class CaregoryService {
    * @param record
    */
   editRecord(record: CategoryModel): Observable<CategoryModel> {
-    return this.http.put<CategoryModel>(
+    return this.http.patch<CategoryModel>(
       `${ServiceConfig.BASE_URL}${this.entity}/${record.id}`,
       record,
       {
         headers: new HttpHeaders({
-          Authorizacion: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         }),
       }
     );
@@ -70,7 +70,7 @@ export class CaregoryService {
       `${ServiceConfig.BASE_URL}${this.entity}/${recordId}`,
       {
         headers: new HttpHeaders({
-          Authorizacion: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         }),
       }
     );

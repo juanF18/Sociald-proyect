@@ -10,8 +10,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NavBarComponent } from './public/master-page/nav-bar/nav-bar.component';
 import { HttpClientModule } from "@angular/common/http";
 import { FileUploader, FileSelectDirective } from 'ng2-file-upload';
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,11 @@ import { FileUploader, FileSelectDirective } from 'ng2-file-upload';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSlideToggleModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

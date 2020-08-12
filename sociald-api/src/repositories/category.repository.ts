@@ -1,4 +1,4 @@
-import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
+import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyRepositoryFactory} from '@loopback/repository';
 import {Category, CategoryRelations, Publication, Area} from '../models';
 import {MongoAtlasDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
@@ -11,17 +11,17 @@ export class CategoryRepository extends DefaultCrudRepository<
   CategoryRelations
 > {
 
-  public readonly publication: BelongsToAccessor<Publication, typeof Category.prototype.id>;
-
   public readonly area: BelongsToAccessor<Area, typeof Category.prototype.id>;
+
+  public readonly publications: HasManyRepositoryFactory<Publication, typeof Category.prototype.id>;
 
   constructor(
     @inject('datasources.mongoAtlas') dataSource: MongoAtlasDataSource, @repository.getter('PublicationRepository') protected publicationRepositoryGetter: Getter<PublicationRepository>, @repository.getter('AreaRepository') protected areaRepositoryGetter: Getter<AreaRepository>,
   ) {
     super(Category, dataSource);
+    this.publications = this.createHasManyRepositoryFactoryFor('publications', publicationRepositoryGetter,);
+    this.registerInclusionResolver('publications', this.publications.inclusionResolver);
     this.area = this.createBelongsToAccessorFor('area', areaRepositoryGetter,);
     this.registerInclusionResolver('area', this.area.inclusionResolver);
-    this.publication = this.createBelongsToAccessorFor('publication', publicationRepositoryGetter,);
-    this.registerInclusionResolver('publication', this.publication.inclusionResolver);
   }
 }

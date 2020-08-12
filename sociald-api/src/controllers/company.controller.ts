@@ -15,6 +15,7 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {authenticate} from '@loopback/authentication';
 import {genSalt, hash} from 'bcryptjs';
@@ -39,7 +40,9 @@ export class CompanyController {
     @repository(UserRepository)
     public userRepository: UserRepository,
     @service(MyUserService)
-    public userService: MyUserService
+    public userService: MyUserService,
+    @service(NotificationService)
+    public notificationService: NotificationService,
   ) {}
 
   @post('/company', {
@@ -57,6 +60,16 @@ export class CompanyController {
     // Separe the password of the rest of the body
     const {email, password, ...companyBody} = body;
     const role = 'company';
+
+    const searchEmail = await this.userRepository.findOne({
+      where: {
+        email: email
+      }
+    });
+
+    if(searchEmail){
+      throw new HttpErrors.UnprocessableEntity("The user already exists!");
+    }
 
     // Create the person
     const savedCompany: Company = await this.companyRepository.create(companyBody);
@@ -87,7 +100,7 @@ export class CompanyController {
       to: email,
     });
 
-    let sendEmail: boolean = await new NotificationService().EmailNotification(
+    let sendEmail: boolean = await this.notificationService.EmailNotification(
       emailData,
     );
 

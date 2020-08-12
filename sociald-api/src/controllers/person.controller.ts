@@ -17,6 +17,7 @@ import {
   post,
   put,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {genSalt, hash} from 'bcryptjs';
 import {EmailNotification, Person, PersonMixedUserRequestBody} from '../models';
@@ -31,6 +32,8 @@ export class PersonController {
     public userRepository: UserRepository,
     @service(MyUserService)
     public userService: MyUserService,
+    @service(NotificationService)
+    public notificationService: NotificationService,
   ) {}
 
   @post('/person', {
@@ -48,6 +51,16 @@ export class PersonController {
     // Separe the password of the rest of the body
     const {email, password, ...personBody} = body;
     const role = 'person';
+
+    const searchEmail = await this.userRepository.findOne({
+      where: {
+        email: email
+      }
+    });
+
+    if(searchEmail){
+      throw new HttpErrors.UnprocessableEntity("The user already exists!");
+    }
 
     // Create the person
     const savedPerson: Person = await this.personRepository.create(personBody);
@@ -80,7 +93,7 @@ export class PersonController {
       to: email,
     });
 
-    let sendEmail: boolean = await new NotificationService().EmailNotification(
+    let sendEmail: boolean = await this.notificationService.EmailNotification(
       emailData,
     );
 

@@ -1,8 +1,10 @@
 import {NotificationDatasource as ND} from '../datasources/notification.datasource';
 import {EmailNotification, SmsNotification} from '../models';
+import { bind, BindingScope } from '@loopback/core';
 const twilio = require('twilio');
 const sgMail = require('@sendgrid/mail');
 
+@bind({scope: BindingScope.TRANSIENT})
 export class NotificationService {
   async SmsNotification(notificartion: SmsNotification): Promise<boolean> {
     try {
@@ -28,6 +30,7 @@ export class NotificationService {
   async EmailNotification(notification: EmailNotification): Promise<boolean> {
     try {
       sgMail.setApiKey(ND.SG_API_KEY);
+
       const msg = {
         to: notification.to,
         from: ND.SG_FROM,
@@ -38,11 +41,11 @@ export class NotificationService {
 
       await sgMail.send(msg).then(
         (d: any) => {
-          console.log(d);
+          console.log("T Response: ", d);
         },
         function (error: any) {
           if (error) {
-            console.error(error.message);
+            console.error("Error: ", error.message);
           }
         },
       );

@@ -1,1 +1,40 @@
-<p>publication-edition works!</p>
+<div *ngIf="publication" class="container">
+  <div class="header">
+    <h2> {{ publication.name }} </h2>
+
+    <p> {{ publication.description }} </p>
+
+    <mat-chip-list aria-label="category">
+      <mat-chip color="accent" selected>{{ publication.category.name }}</mat-chip>
+    </mat-chip-list>
+
+    <div class="person-info">
+      <small>Developer</small> <br>
+      <strong> {{ publication.person.name }} {{ publication.person.lastname }} </strong>
+      <p> Phone: {{ publication.person.phone }} </p>
+    </div>
+  </div>
+
+  <div>
+
+    <form [formGroup]="fgValidator" class="col s12 form-pr">
+
+      <div class="row">
+        <mat-form-field appearance="fill" class="col s12">
+          <mat-label>Write a message to {{ publication.person.name }}</mat-label>
+          <textarea matInput formControlName="message"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <button class="btn waves-effect green" type="submit" (click)="contractPublication()" name="action">
+            Contract!
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+</div>

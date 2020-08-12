@@ -14,6 +14,9 @@ export class Company extends Entity {
   @property({
     type: 'string',
     required: true,
+    index: {
+      unique: true,
+    },
   })
   nit: string;
 

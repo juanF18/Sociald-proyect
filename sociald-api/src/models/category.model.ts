@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
 import {Publication} from './publication.model';
 import {Area} from './area.model';
 
@@ -12,14 +12,17 @@ export class Category extends Entity {
   id?: string;
 
   @property({
-    type: 'string',
+    type: 'number',
     required: true,
   })
-  code: string;
+  code: number;
 
   @property({
     type: 'string',
     required: true,
+    index: {
+      unique: true,
+    },
   })
   name: string;
 
@@ -28,6 +31,9 @@ export class Category extends Entity {
 
   @belongsTo(() => Area)
   areaId: string;
+
+  @hasMany(() => Publication)
+  publications: Publication[];
 
   constructor(data?: Partial<Category>) {
     super(data);

@@ -14,19 +14,25 @@ export class PublicationRepository extends DefaultCrudRepository<
 
   public readonly person: BelongsToAccessor<Person, typeof Publication.prototype.id>;
 
+  public readonly category: BelongsToAccessor<Category, typeof Publication.prototype.id>;
+
   public readonly publicationRequests: HasManyRepositoryFactory<PublicationRequest, typeof Publication.prototype.id>;
 
-  public readonly categories: HasManyRepositoryFactory<Category, typeof Publication.prototype.id>;
-
   constructor(
-    @inject('datasources.mongoAtlas') dataSource: MongoAtlasDataSource, @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>, @repository.getter('PublicationRequestRepository') protected publicationRequestRepositoryGetter: Getter<PublicationRequestRepository>, @repository.getter('CategoryRepository') protected categoryRepositoryGetter: Getter<CategoryRepository>,
+    @inject('datasources.mongoAtlas') dataSource: MongoAtlasDataSource,
+    @repository.getter('PersonRepository')
+    protected personRepositoryGetter: Getter<PersonRepository>,
+    @repository.getter('PublicationRequestRepository')
+    protected publicationRequestRepositoryGetter: Getter<PublicationRequestRepository>,
+    @repository.getter('CategoryRepository')
+    protected categoryRepositoryGetter: Getter<CategoryRepository>,
   ) {
     super(Publication, dataSource);
-    this.categories = this.createHasManyRepositoryFactoryFor('categories', categoryRepositoryGetter,);
-    this.registerInclusionResolver('categories', this.categories.inclusionResolver);
     this.publicationRequests = this.createHasManyRepositoryFactoryFor('publicationRequests', publicationRequestRepositoryGetter,);
     this.registerInclusionResolver('publicationRequests', this.publicationRequests.inclusionResolver);
     this.person = this.createBelongsToAccessorFor('person', personRepositoryGetter,);
     this.registerInclusionResolver('person', this.person.inclusionResolver);
+    this.category = this.createBelongsToAccessorFor('category', categoryRepositoryGetter,);
+    this.registerInclusionResolver('category', this.category.inclusionResolver);
   }
 }

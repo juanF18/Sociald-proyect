@@ -15,14 +15,19 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {Area} from '../models';
 import {AreaRepository} from '../repositories';
+import { service } from '@loopback/core';
+import { CodeGeneratorService } from '../services/code-generator.service';
 
 export class AreaController {
   constructor(
     @repository(AreaRepository)
     public areaRepository : AreaRepository,
+    @service(CodeGeneratorService)
+    private codeGeneratorService: CodeGeneratorService,
   ) {}
 
   @post('/area', {
@@ -39,14 +44,30 @@ export class AreaController {
         'application/json': {
           schema: getModelSchemaRef(Area, {
             title: 'NewArea',
-            exclude: ['id'],
+            exclude: ['id', 'code'],
           }),
         },
       },
     })
     area: Omit<Area, 'id'>,
   ): Promise<Area> {
-    return this.areaRepository.create(area);
+
+    let searchName = await this.areaRepository.findOne({
+      where: { name: area.name }
+    });
+
+    if(searchName) {
+      throw new HttpErrors.UnprocessableEntity("This area name already exists!")
+    }
+
+    let count = (await this.areaRepository.count()).count;
+
+    let withCode = {
+      ...area,
+      code: await this.codeGeneratorService.genNextCode(count),
+    };
+
+    return this.areaRepository.create(withCode);
   }
 
   @get('/area/count', {

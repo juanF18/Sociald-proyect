@@ -2,13 +2,17 @@
 <div class="row">
   <form [formGroup]="fgValidator" class="col s12" >
     <div class="row">
-      <div class="input-field col s2">
-        <input formControlName="code" id="code" type="text" class="validate" required>
-        <label for="code">Code</label>
-      </div>
       <div class="input-field col s5">
         <input formControlName="name" id="nameArea" type="text" class="validate" required>
         <label for="nameArea">Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s5">
+        <label for="areaId">Area</label>
+        <select formControlName="areaId" name="areaId" id="areaId" class="validate" required>
+          <option *ngFor="let area of areas" value="{{area.id}}"> {{ area.name }} </option>
+        </select>
       </div>
     </div>
     <div class="row">

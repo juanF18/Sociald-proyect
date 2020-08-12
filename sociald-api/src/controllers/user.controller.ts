@@ -3,17 +3,11 @@
 import {service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors, post, requestBody} from '@loopback/rest';
-import {EmailNotification, SmsNotification, CredentialsRequestBody} from '../models';
-import {PersonRepository, UserRepository} from '../repositories';
+import {EmailNotification, CredentialsRequestBody} from '../models';
+import {UserRepository} from '../repositories';
 import {NotificationService, Credentials, MyUserService, JWTService} from '../services';
 import {AuthenticationService} from '../services/authentication.service';
 
-// import {inject} from '@loopback/core';
-
-class PasswordResetData {
-  email: string;
-  type: number;
-}
 
 export class UserController {
   constructor(
@@ -23,6 +17,10 @@ export class UserController {
     public userService: MyUserService,
     @service(JWTService)
     public jwtService: JWTService,
+    @service(AuthenticationService)
+    public authenticationService: AuthenticationService,
+    @service(NotificationService)
+    public notificationService: NotificationService,
   ) {}
 
   @post('login', {
@@ -57,66 +55,63 @@ export class UserController {
     return {token};
   }
 
-  // @post('/password-reset', {
-  //   responses: {
-  //     description: {
-  //       '200': {
-  //         description: 'reset for Users',
-  //       },
-  //     },
-  //   },
-  // })
-  // async reset(@requestBody() data: PasswordResetData): Promise<boolean> {
-  //   let randonPassword = await this.authenticationService.ResetPassword(
-  //     data.email,
-  //   );
-  //   let person = await this.userRepository.findOne({
-  //     where: {email: data.email},
-  //   });
+  @post('/password-reset', {
+    responses: {
+      description: {
+        '200': {
+          description: 'reset for Users',
+        },
+      },
+    },
+  })
+  async reset(
+    @requestBody({
+      description: 'The input of login function',
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              email: { type: 'string' },
+            }
+          }
+        },
+      },
+    })
+    data: any
+  ): Promise<string> {
+    let user = await this.userRepository.findOne({
+      where: {email: data.email},
+    });
 
-  //   if (randonPassword) {
-  //     //Send new passwor
-  //     //1. sms
-  //     //2. mail
-  //     switch (data.type) {
-  //       case 1:
-  //         if (person) {
-  //           let notification = new SmsNotification({
-  //             body: `Su nueva contraseña es ${randonPassword}`,
-  //             to: person.phone,
-  //           });
-  //           let sms = await new NotificationService().SmsNotification(
-  //             notification,
-  //           );
-  //           if (sms) {
-  //             console.log('SMS enviado');
-  //             return true;
-  //           }
-  //           throw new HttpErrors[400]('telefono no encontrado');
-  //         }
-  //       case 2:
-  //         if (person) {
-  //           let notification = new EmailNotification({
-  //             body: 'Cambio de contraseña',
-  //             text: `La contrseña generada es es <strong>${randonPassword}</strong>`,
-  //             to: person.email,
-  //             subject: 'Nueva contraseña',
-  //           });
-  //           let mail = await new NotificationService().EmailNotification(
-  //             notification,
-  //           );
-  //           if (mail) {
-  //             console.log('Email eviado');
-  //             return true;
-  //           }
-  //           throw new HttpErrors[400]('Email not found');
-  //         }
-  //         throw new HttpErrors[400]('Notificacion no soportada');
+    if (user) {
+      let randomPassword = await this.authenticationService.ResetPassword(
+        data.email,
+      );
 
-  //       default:
-  //         throw new HttpErrors[400]('User not fount');
-  //     }
-  //   }
-  //   return false;
-  // }
+      if (randomPassword) {
+        let notification = new EmailNotification({
+          body: 'Cambio de contraseña',
+          text: `La contraseña generada es es <strong>${randomPassword}</strong>`,
+          to: user.email,
+          subject: 'Nueva contraseña',
+        });
+
+        let mail = await this.notificationService.EmailNotification(
+          notification,
+        );
+
+        if (mail) {
+          return "Email Enviado";
+        }
+
+        throw new HttpErrors[400]('Notificacion no soportada');
+      }
+
+      throw new HttpErrors[400]('Problema al crear la contraseña');
+    }
+
+    throw new HttpErrors[400]('Usuario no encontrado');
+  }
 }

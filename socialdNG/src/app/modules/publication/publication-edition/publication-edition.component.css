@@ -1,0 +1,21 @@
+.form-pr{
+  margin: 40px auto;
+}
+
+.header {
+  color: white;
+  text-align: center;
+  padding: 20px 40px;
+  background-color: #37479F;
+  border-radius: 10px;
+}
+
+mat-chip-list {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.person-info {
+  margin-top: 20px;
+  text-align: right;
+}

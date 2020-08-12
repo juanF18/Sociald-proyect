@@ -1,6 +1,6 @@
 export class PublicationRequestModel{
     id?: string;
-    messages: string;
+    message: string;
     publicationId: string;
     companyId: string;
 }

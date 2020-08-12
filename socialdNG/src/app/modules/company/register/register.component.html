@@ -61,14 +61,14 @@
             </div>
             <div class="input-field col s4">
                 <i class="material-icons prefix">phone</i>
-                <input id="adress" type="text" formControlName="adress" class="validate" required>
-                <label for="adress">Adress</label>
-                <div class="warning-validator" *ngIf="fgv.adress.errors && (fgv.adress.dirty || fgv.adress.touched)">
-                    <strong *ngIf="fgv.adress.errors.required">
+                <input id="address" type="text" formControlName="address" class="validate" required>
+                <label for="address">Address</label>
+                <div class="warning-validator" *ngIf="fgv.address.errors && (fgv.address.dirty || fgv.address.touched)">
+                    <strong *ngIf="fgv.address.errors.required">
                         This field is required.
                     </strong>
-                    <strong *ngIf="fgv.adress.errors.minlength">
-                        This field must be at least {{adressMinLength}} long.
+                    <strong *ngIf="fgv.address.errors.minlength">
+                        This field must be at least {{addressMinLength}} long.
                     </strong>
                 </div>
             </div>

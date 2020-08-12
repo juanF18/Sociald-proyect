@@ -15,14 +15,19 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {Publication} from '../models';
 import {PublicationRepository} from '../repositories';
+import { service } from '@loopback/core';
+import { CodeGeneratorService } from '../services/code-generator.service';
 
 export class PublicationController {
   constructor(
     @repository(PublicationRepository)
     public publicationRepository : PublicationRepository,
+    @service(CodeGeneratorService)
+    private codeGeneratorService: CodeGeneratorService,
   ) {}
 
   @post('/publication', {
@@ -39,14 +44,29 @@ export class PublicationController {
         'application/json': {
           schema: getModelSchemaRef(Publication, {
             title: 'NewPublication',
-            exclude: ['id'],
+            exclude: ['id', 'code'],
           }),
         },
       },
     })
     publication: Omit<Publication, 'id'>,
   ): Promise<Publication> {
-    return this.publicationRepository.create(publication);
+    let searchName = await this.publicationRepository.findOne({
+      where: { name: publication.name }
+    });
+
+    if(searchName) {
+      throw new HttpErrors.UnprocessableEntity("This publication name already exists!")
+    }
+
+    let count = (await this.publicationRepository.count()).count;
+
+    let withCode = {
+      ...publication,
+      code: await this.codeGeneratorService.genNextCode(count),
+    };
+
+    return this.publicationRepository.create(withCode);
   }
 
   @get('/publication/count', {
