@@ -1,11 +1,9 @@
 import {bind, /* inject, */ BindingScope, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {generate as passGenerator} from 'generate-password';
-import * as jwt from 'jsonwebtoken';
 import {PasswordKeys as passKeys} from '../keys/password-keys';
-import {User} from '../models';
 import {UserRepository} from '../repositories';
-import {CryptingService} from './crypting.service';
+import {genSalt, hash} from 'bcryptjs';
 
 const jwt_secret_key = 'IDONTKNOWYOU';
 
@@ -15,8 +13,6 @@ export class AuthenticationService {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
-    @service(CryptingService)
-    public cryptingService: CryptingService,
   ) {}
 
   async ResetPassword(email: string): Promise<string | false> {
@@ -24,12 +20,10 @@ export class AuthenticationService {
 
     if (user) {
       let randomPass = await this.GenerateRandomPassword();
-      let encryptPassword = this.cryptingService.getDoubledMd5Password(
-        randomPass,
-      );
+      let encryptPassword = await hash(randomPass, await genSalt());
       user.password = encryptPassword;
 
-      this.userRepository.replaceById(user.id, user);
+      this.userRepository.updateById(user.id, user);
 
       return randomPass;
     }
