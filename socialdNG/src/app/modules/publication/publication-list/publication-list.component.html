@@ -12,8 +12,12 @@
           <small>
               Code: {{r.code}}<br>
               Description: {{r.description}} <br>
-              Category: {{ r.category.name }}
           </small>
+
+          <mat-chip-list aria-label="category">
+            <mat-chip color="primary" selected>{{ r.category.name }}</mat-chip>
+          </mat-chip-list>
+
           <div class="secondary-content">
               <a routerLink="/publication/edition/{{r.id}}" class="waves-effect green btn "><i
                       class="material-icons">edit</i></a>
@@ -53,8 +57,12 @@
               <strong>Developer: {{ r.person.name }}</strong> <br>
               Code: {{r.code}}<br>
               Description: {{r.description}} <br>
-              Category: {{ r.category.name }}
           </small>
+
+          <mat-chip-list aria-label="category">
+            <mat-chip color="primary" selected>{{ r.category.name }}</mat-chip>
+          </mat-chip-list>
+
           <div class="secondary-content">
               <a routerLink="/publication/edition/{{r.id}}" class="waves-effect green btn "><i
                       class="material-icons">add_shopping_cart</i></a>

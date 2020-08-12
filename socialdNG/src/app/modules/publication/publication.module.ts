@@ -8,6 +8,7 @@ import { PublicationRemoveComponent } from './publication-remove/publication-rem
 import { PublicationCreationComponent } from './publication-creation/publication-creation.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PublicationRoutingModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    MatChipsModule,
   ]
 })
 export class PublicationModule { }
