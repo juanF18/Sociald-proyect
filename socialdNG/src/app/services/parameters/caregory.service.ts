@@ -44,7 +44,7 @@ export class CaregoryService {
       record,
       {
         headers: new HttpHeaders({
-          Authorizacion: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         }),
       }
     );
@@ -59,7 +59,7 @@ export class CaregoryService {
       record,
       {
         headers: new HttpHeaders({
-          Authorizacion: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         }),
       }
     );
@@ -70,7 +70,7 @@ export class CaregoryService {
       `${ServiceConfig.BASE_URL}${this.entity}/${recordId}`,
       {
         headers: new HttpHeaders({
-          Authorizacion: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         }),
       }
     );
