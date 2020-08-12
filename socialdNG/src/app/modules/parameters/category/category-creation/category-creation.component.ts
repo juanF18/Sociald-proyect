@@ -17,7 +17,7 @@ export class CategoryCreationComponent implements OnInit {
   nameMinLength = FormsConfig.PARAM_NAME_MIN_LENGTH;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private service: CaregoryService,
     private router: Router
     ) {}
@@ -28,7 +28,6 @@ export class CategoryCreationComponent implements OnInit {
 
   FormBuilding() {
     this.fgValidator = this.fb.group({
-      code: ['',[Validators.required]],
       name: ['', [Validators.required, Validators.minLength(this.nameMinLength)]],
     });
   }
@@ -47,12 +46,11 @@ export class CategoryCreationComponent implements OnInit {
       error =>{
         showMessage("Error al guardar.")
       });
-    } 
+    }
   }
 
   getCategoryData(): CategoryModel{
     let model = new CategoryModel();
-    model.code = this.fgv.code.value;
     model.name = this.fgv.name.value;
     return model;
   }

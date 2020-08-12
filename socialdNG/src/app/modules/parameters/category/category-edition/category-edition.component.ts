@@ -21,7 +21,7 @@ export class CategoryEditionComponent implements OnInit {
     private service: CaregoryService,
     private router : Router,
     private route: ActivatedRoute
-  ) { 
+  ) {
     this.id = this.route.snapshot.params['id'];
   }
 
@@ -35,7 +35,6 @@ export class CategoryEditionComponent implements OnInit {
       this.service.getRecordById(this.id).subscribe(
         (data) => {
           this.fgv.id.setValue(this.id);
-          this.fgv.code.setValue(data.code);
           this.fgv.name.setValue(data.name);
         },
         (error) => {
@@ -51,7 +50,6 @@ export class CategoryEditionComponent implements OnInit {
   FormBuilding() {
     this.fgValidator = this.fb.group({
       id: ['', [Validators.required]],
-      code: ['', [Validators.required]],
       name: [
         '',
         [Validators.required, Validators.minLength(this.nameMinLenth)],
@@ -80,7 +78,6 @@ export class CategoryEditionComponent implements OnInit {
   getAreaData(): CategoryModel {
     let model = new CategoryModel();
     model.id = this.fgv.id.value;
-    model.code = this.fgv.code.value;
     model.name = this.fgv.name.value;
     return model;
   }

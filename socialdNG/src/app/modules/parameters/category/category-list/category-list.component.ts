@@ -54,7 +54,7 @@ export class CategoryListComponent implements OnInit {
         (error) => {
           showMessage('error en al comunicacion del backend');
         }
-      );  
+      );
     }
   }
 }

@@ -34,7 +34,6 @@ export class AreaEditionComponent implements OnInit {
       this.service.getRecordById(this.id).subscribe(
         (data) => {
           this.fgv.id.setValue(this.id);
-          this.fgv.code.setValue(data.code);
           this.fgv.name.setValue(data.name);
           this.fgv.description.setValue(data.description);
         },
@@ -51,7 +50,6 @@ export class AreaEditionComponent implements OnInit {
   FormBuilding() {
     this.fgValidator = this.fb.group({
       id: ['', [Validators.required]],
-      code: ['', [Validators.required]],
       name: [
         '',
         [Validators.required, Validators.minLength(this.nameMinLength)],
@@ -81,7 +79,6 @@ export class AreaEditionComponent implements OnInit {
   getAreaData(): AreaModel {
     let model = new AreaModel();
     model.id = this.fgv.id.value;
-    model.code = this.fgv.code.value;
     model.name = this.fgv.name.value;
     model.description = this.fgv.description.value;
     return model;
