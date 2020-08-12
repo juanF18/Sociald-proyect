@@ -66,7 +66,7 @@ export class SkillController {
       code: await this.codeGeneratorService.genNextCode(count),
     };
 
-    return this.skillRepository.create(skill);
+    return this.skillRepository.create(withCode);
   }
 
   @get('/skill/count', {
