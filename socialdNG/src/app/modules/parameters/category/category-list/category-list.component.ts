@@ -29,7 +29,6 @@ export class CategoryListComponent implements OnInit {
     this.service.getAllRecords().subscribe(
       (data) => {
         this.recordList = data;
-        //console.log(this.recordList);
       },
       (error) => {
         showMessage('error en al comunicacion del backend');

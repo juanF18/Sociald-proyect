@@ -9,7 +9,8 @@
     <li *ngFor="let r of recordList | paginate: { itemsPerPage: 2, currentPage: p }" class="collection-item avatar">
         <span class="title">Title</span>
         <p> Code: {{r.code}}<br>
-            Name: {{r.name}}
+            Name: {{r.name}} <br>
+            <small>AREA: {{ r.area.name }}</small>
         </p>
         <div class="secondary-content">
             <a routerLink="/parameters/category-edition/{{r.id}}" class="waves-effect green btn "><i
