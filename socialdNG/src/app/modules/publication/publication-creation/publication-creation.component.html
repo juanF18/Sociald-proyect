@@ -1,1 +1,47 @@
-<p>publication-creation works!</p>
+<h3>Create a new Post!</h3>
+<div class="row">
+  <form [formGroup]="fgValidator" class="col s12" >
+
+    <div class="row">
+      <div class="input-field col s5">
+        <input formControlName="name" id="nameArea" type="text" class="validate" required>
+        <label for="nameArea">Name</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s5">
+        <input formControlName="description" id="description" type="text" class="validate" required>
+        <label for="description">Description</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s5">
+        <!-- <input formControlName="description" id="description" type="text" class="validate" required> -->
+        Comming Soon...
+        <label for="pic">Publication Image</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s5">
+        <label for="categoryIds">Categories</label>
+        <select formControlName="categoryIds" name="categoryIds" id="categories" class="validate" multiple required>
+          <option *ngFor="let cat of categoryIds" value="{{cat.id}}"> {{ cat.name }} </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <button class="btn waves-effect green" type="button" (click)="saveNewRecordfn()" name="action">Save
+          <i class="material-icons right">save</i>
+        </button>
+        &nbsp;&nbsp;
+        <a routerLink="/publication" class="waves-effect red btn"><i class="material-icons right">cancel</i>Cancel</a>
+      </div>
+    </div>
+
+  </form>
+</div>
