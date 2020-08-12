@@ -45,7 +45,12 @@ export class PublicationService {
 
   getAllMyPublications(): Observable<PublicationModel[]> {
     return this.http.get<PublicationModel[]>(
-      `${ServiceConfig.BASE_URL}people/${this.currentUser.data.id}/publications?filter={ "include": [ { "relation": "category" } ] }`
+      `${ServiceConfig.BASE_URL}people/${this.currentUser.data.id}/publications?filter={ "include": [ { "relation": "category" } ] }`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.token}`,
+        }),
+      }
     )
   }
 
