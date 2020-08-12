@@ -16,7 +16,7 @@ export class Publication extends Entity {
     type: 'number',
     required: true,
   })
-  code: number;
+  code?: number;
 
   @property({
     type: 'string',
@@ -42,8 +42,8 @@ export class Publication extends Entity {
   @hasMany(() => PublicationRequest)
   publicationRequests: PublicationRequest[];
 
-  @hasMany(() => Category)
-  categories: Category[];
+  @belongsTo(() => Category)
+  categoryId?: string;
 
   constructor(data?: Partial<Publication>) {
     super(data);
