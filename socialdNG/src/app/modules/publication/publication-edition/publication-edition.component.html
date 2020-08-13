@@ -4,6 +4,11 @@
 
     <p> {{ publication.description }} </p>
 
+    <cl-image *ngIf="publication.publicationPicPath" [public-id]="publication.publicationPicPath" class="thumbnail">
+        <cl-transformation width="180" height="180" crop="fill">
+        </cl-transformation>
+    </cl-image>
+
     <mat-chip-list aria-label="category">
       <mat-chip color="accent" selected>{{ publication.category.name }}</mat-chip>
     </mat-chip-list>
