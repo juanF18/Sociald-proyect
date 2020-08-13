@@ -9,11 +9,14 @@ import { FooterComponent } from './public/master-page/footer/footer.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NavBarComponent } from './public/master-page/nav-bar/nav-bar.component';
 import { HttpClientModule } from "@angular/common/http";
-import { FileUploader, FileSelectDirective } from 'ng2-file-upload';
+import { FileUploadModule, FileUploader, FileSelectDirective } from 'ng2-file-upload';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {CloudinaryModule } from '@cloudinary/angular-5.x'
+import * as cloudinary from 'cloudinary-core'
+import { cloud } from "./config/cloudinary-config";
 
 @NgModule({
   declarations: [
@@ -35,9 +38,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatInputModule,
     MatFormFieldModule,
     MatSlideToggleModule,
+    CloudinaryModule.forRoot(cloudinary, cloud.config),
+    FileUploadModule,
+    FormsModule
 
   ],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

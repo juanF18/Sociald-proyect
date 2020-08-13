@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SecurityService } from 'src/app/services/security.service';
+import { cloud } from "../../../config/cloudinary-config";
 
 @Component({
   selector: 'app-side-menu',
@@ -11,11 +12,14 @@ export class SideMenuComponent implements OnInit {
   isLogged: Boolean = false;
   email: String = '';
   role: String = 'person';
-  img: string;
+  public_id: string;
+  name: String = ''
+  cloudName: string;
 
   subscription: Subscription;
 
   constructor(private service: SecurityService) {
+    this.cloudName = cloud.CLOUD_NAME
   }
   
   ngOnInit(): void {
@@ -25,7 +29,13 @@ export class SideMenuComponent implements OnInit {
       let tokenData = this.service.getDataToken(sessionData);
       this.role = tokenData.role;
       this.email = tokenData.email;
+      this.name = tokenData.name
+      setTimeout(()=>{
+        this.public_id = tokenData.data.profilePicPath;
+      }, 2000)
       console.log(tokenData);
+      
+      
       
     });
   }
