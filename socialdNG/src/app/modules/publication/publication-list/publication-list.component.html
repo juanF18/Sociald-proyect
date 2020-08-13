@@ -62,17 +62,26 @@
 
     <ul class="collection">
         <li *ngFor="let r of recordList | paginate: { itemsPerPage: 2, currentPage: p }" class="collection-item avatar">
-            <span class="title">{{r.name}}</span> <br>
-            <small>
-                <strong>Developer: {{ r.person.name }}</strong> <br>
-                Code: {{r.code}}<br>
-                Description: {{r.description}} <br>
-            </small>
+            <div class="row">
+                <div class="col s2">
+                    <cl-image *ngIf="r.publicationPicPath" [public-id]="r.publicationPicPath" class="thumbnail">
+                        <cl-transformation width="80" height="80" crop="fill" radius="max">
+                        </cl-transformation>
+                    </cl-image>
+                </div>
+                <div class="col s3">
+                    <span class="title">{{r.name}}</span> <br>
+                    <small>
+                        <strong>Developer: {{ r.person.name }}</strong> <br>
+                        Code: {{r.code}}<br>
+                        Description: {{r.description}} <br>
+                    </small>
 
-            <mat-chip-list aria-label="category">
-                <mat-chip color="primary" selected>{{ r.category.name }}</mat-chip>
-            </mat-chip-list>
-
+                    <mat-chip-list aria-label="category">
+                        <mat-chip color="primary" selected>{{ r.category.name }}</mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>
             <div class="secondary-content">
                 <a routerLink="/publication/edition/{{r.id}}" class="waves-effect green btn "><i
                         class="material-icons">add_shopping_cart</i></a>
