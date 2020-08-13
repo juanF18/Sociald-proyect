@@ -1,74 +1,84 @@
 <div *ngIf="currentUser.role == 'person'">
-  <h3>My Posts</h3>
-  <a routerLink="/publication/creation" class="waves-effect green btn ">New Post<i
-      class="material-icons right">add</i></a>
+    <h3>My Posts</h3>
+    <a routerLink="/publication/creation" class="waves-effect green btn ">New Post<i
+            class="material-icons right">add</i></a>
 
-  <br />
-  <br />
+    <br />
+    <br />
 
-  <ul class="collection">
-      <li *ngFor="let r of recordList | paginate: { itemsPerPage: 2, currentPage: p }" class="collection-item avatar">
-          <span class="title">{{r.name}}</span> <br>
-          <small>
-              Code: {{r.code}}<br>
-              Description: {{r.description}} <br>
-          </small>
+    <ul class="collection">
+        <li *ngFor="let r of recordList | paginate: { itemsPerPage: 2, currentPage: p }" class="collection-item avatar">
+            <div class="row">
+                <div class="col s2">
+                    <cl-image *ngIf="r.publicationPicPath" [public-id]="r.publicationPicPath" class="thumbnail">
+                        <cl-transformation width="80" height="80" crop="fill" radius="max">
+                        </cl-transformation>
+                    </cl-image>
+                </div>
+                <div class="col s3">
+                    <span class="title">{{r.name}}</span> <br>
+                    <small>
+                        Code: {{r.code}}<br>
+                        Description: {{r.description}} <br>
+                    </small>
 
-          <mat-chip-list aria-label="category">
-            <mat-chip color="primary" selected>{{ r.category.name }}</mat-chip>
-          </mat-chip-list>
+                    <mat-chip-list aria-label="category">
+                        <mat-chip color="primary" selected>{{ r.category.name }}</mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>
+            <div class="secondary-content">
+                <a routerLink="/publication/edition/{{r.id}}" class="waves-effect green btn "><i
+                        class="material-icons">edit</i></a>
+                &nbsp;
+                <button (click)="removeConfirmation(r.id)" class="btn waves-effect red darken-4 " type="submit"
+                    name="action"><i class="material-icons">delete</i></button>
+            </div>
+        </li>
+    </ul>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
-          <div class="secondary-content">
-              <a routerLink="/publication/edition/{{r.id}}" class="waves-effect green btn "><i
-                      class="material-icons">edit</i></a>
-              &nbsp;
-              <button (click)="removeConfirmation(r.id)" class="btn waves-effect red darken-4 "
-                  type="submit" name="action"><i class="material-icons">delete</i></button>
-          </div>
-      </li>
-  </ul>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
-
-  <!--Modal alert for remove-->
-  <div id="removeCofirmation" class="modal">
-      <div class="modal-content">
-          <h4>Remove Cofirmation</h4>
-          <h6>
-              <p>Are you sure to delete the record?</p>
-          </h6>
-      </div>
-      <div class="modal-footer">
-          <button (click)="deleteRecord()" class="btn waves-effect red darken-4 "type="submit" name="action">Confirm</button>
-          <a class="modal-close waves-effect btn-flat">Close</a>
-      </div>
-  </div>
+    <!--Modal alert for remove-->
+    <div id="removeCofirmation" class="modal">
+        <div class="modal-content">
+            <h4>Remove Cofirmation</h4>
+            <h6>
+                <p>Are you sure to delete the record?</p>
+            </h6>
+        </div>
+        <div class="modal-footer">
+            <button (click)="deleteRecord()" class="btn waves-effect red darken-4 " type="submit"
+                name="action">Confirm</button>
+            <a class="modal-close waves-effect btn-flat">Close</a>
+        </div>
+    </div>
 </div>
 
 <div *ngIf="currentUser.role == 'company'">
-  <h3>List of Posts</h3>
+    <h3>List of Posts</h3>
 
-  <br />
-  <br />
+    <br />
+    <br />
 
-  <ul class="collection">
-      <li *ngFor="let r of recordList | paginate: { itemsPerPage: 2, currentPage: p }" class="collection-item avatar">
-          <span class="title">{{r.name}}</span> <br>
-          <small>
-              <strong>Developer: {{ r.person.name }}</strong> <br>
-              Code: {{r.code}}<br>
-              Description: {{r.description}} <br>
-          </small>
+    <ul class="collection">
+        <li *ngFor="let r of recordList | paginate: { itemsPerPage: 2, currentPage: p }" class="collection-item avatar">
+            <span class="title">{{r.name}}</span> <br>
+            <small>
+                <strong>Developer: {{ r.person.name }}</strong> <br>
+                Code: {{r.code}}<br>
+                Description: {{r.description}} <br>
+            </small>
 
-          <mat-chip-list aria-label="category">
-            <mat-chip color="primary" selected>{{ r.category.name }}</mat-chip>
-          </mat-chip-list>
+            <mat-chip-list aria-label="category">
+                <mat-chip color="primary" selected>{{ r.category.name }}</mat-chip>
+            </mat-chip-list>
 
-          <div class="secondary-content">
-              <a routerLink="/publication/edition/{{r.id}}" class="waves-effect green btn "><i
-                      class="material-icons">add_shopping_cart</i></a>
-              &nbsp;
-          </div>
-      </li>
-  </ul>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            <div class="secondary-content">
+                <a routerLink="/publication/edition/{{r.id}}" class="waves-effect green btn "><i
+                        class="material-icons">add_shopping_cart</i></a>
+                &nbsp;
+            </div>
+        </li>
+    </ul>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
