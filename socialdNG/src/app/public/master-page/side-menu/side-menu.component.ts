@@ -11,6 +11,7 @@ export class SideMenuComponent implements OnInit {
   isLogged: Boolean = false;
   email: String = '';
   role: String = 'person';
+  img: string;
 
   subscription: Subscription;
 
@@ -24,6 +25,7 @@ export class SideMenuComponent implements OnInit {
       let tokenData = this.service.getDataToken(sessionData);
       this.role = tokenData.role;
       this.email = tokenData.email;
+      console.log(tokenData);
       
     });
   }

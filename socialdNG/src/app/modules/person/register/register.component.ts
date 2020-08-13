@@ -32,10 +32,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.FormBuilding();
-    if(this.serviceImg.public_id){
-      this.fgv.profilePicPath.setValue(this.serviceImg.getPublicId())
-      this.profile_pic = this.serviceImg.getPublicId()
-    }
+    this.fgv.profilePicPath.setValue(this.serviceImg.getPublicId())
+    this.profile_pic = this.serviceImg.getPublicId()
   }
 
   FormBuilding() {

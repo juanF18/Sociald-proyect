@@ -1,7 +1,6 @@
 <h3>Create a new Post!</h3>
 <div class="row">
-  <form [formGroup]="fgValidator" class="col s12" >
-
+  <form [formGroup]="fgValidator" class="col s12">
     <div class="row">
       <div class="input-field col s5">
         <input formControlName="name" id="nameArea" type="text" class="validate" required>
@@ -17,10 +16,12 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s5">
-        <!-- <input formControlName="description" id="description" type="text" class="validate" required> -->
-        Comming Soon...
-        <label for="pic">Publication Image</label>
+      <div class="input-field col s2">
+        <label for="publicationPicPath">Publication Image</label>
+        <input id="publicationPicPath" formControlName="publicationPicPath" type="text" class="validate">
+      </div>
+      <div class="input-file col s2">
+        <a routerLink="/upload-pics/upload-img" class="waves-effect green btn ">Upload Pic</a>
       </div>
     </div>
 
