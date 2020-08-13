@@ -11,9 +11,10 @@
       <li *ngIf="isLogged"><a routerLink="/security/logout">Logout</a></li>
       <li *ngIf="isLogged"><a routerLink="/security/change-password">Change Password</a></li>
       <li  *ngIf="!isLogged"><a class="dropdown-trigger" data-target="dropdownRegister">Register<i
-            class="material-icons right">arrow_drop_down</i></a></li>
-      <li><a routerLink="/general/about-us">About us</a></li>
-    </ul>
+        class="material-icons right">arrow_drop_down</i></a></li>
+        <li *ngIf="!isLogged"><a routerLink="/security/reset">Reset Pasword</a></li>
+        <li><a routerLink="/general/about-us">About us</a></li>
+      </ul>
   </div>
 </nav>
 

@@ -1,1 +1,32 @@
-<p>reset works!</p>
+<h2>Reset Password</h2>
+
+<div id="login-page" class="row">
+    <div class="col s12 z-depth-6 card-panel">
+        <form [formGroup]="fgValidator" class="login-form">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input formControlName="email" class="validate" id="email" type="text">
+                    <label for="email" data-error="wrong" data-success="right">Email</label>
+                    <div class="warning-validator"
+                        *ngIf="fgv.email.errors && (fgv.email.dirty || fgv.email.touched)">
+                        <strong *ngIf="fgv.email.errors.required">
+                            This field is required.
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="input-field col s12">
+                    <button (click)="passResetFN()" class="btn waves-effect waves-light" type="button"
+                        name="action">Reset
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
