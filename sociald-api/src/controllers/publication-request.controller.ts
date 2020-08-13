@@ -1,3 +1,5 @@
+import {authenticate} from '@loopback/authentication';
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -7,34 +9,36 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
-  HttpErrors,
 } from '@loopback/rest';
-import {PublicationRequest, EmailNotification} from '../models';
-import {PublicationRequestRepository, CompanyRepository, PublicationRepository, UserRepository} from '../repositories';
-import { service } from '@loopback/core';
-import { NotificationService } from '../services';
-import { authenticate } from '@loopback/authentication';
+import {EmailNotification, PublicationRequest} from '../models';
+import {
+  CompanyRepository,
+  PublicationRepository,
+  PublicationRequestRepository,
+  UserRepository,
+} from '../repositories';
+import {NotificationService} from '../services';
 
 export class PublicationRequestController {
   constructor(
     @repository(PublicationRequestRepository)
-    public publicationRequestRepository : PublicationRequestRepository,
+    public publicationRequestRepository: PublicationRequestRepository,
     @repository(CompanyRepository)
-    public companyRepository : CompanyRepository,
+    public companyRepository: CompanyRepository,
     @repository(PublicationRepository)
-    public publicationRepository : PublicationRepository,
+    public publicationRepository: PublicationRepository,
     @repository(UserRepository)
-    public userRepository : UserRepository,
+    public userRepository: UserRepository,
     @service(NotificationService)
-    protected notificationService : NotificationService,
+    protected notificationService: NotificationService,
   ) {}
 
   @authenticate('socialdjwt')
@@ -42,7 +46,9 @@ export class PublicationRequestController {
     responses: {
       '200': {
         description: 'PublicationRequest model instance',
-        content: {'application/json': {schema: getModelSchemaRef(PublicationRequest)}},
+        content: {
+          'application/json': {schema: getModelSchemaRef(PublicationRequest)},
+        },
       },
     },
   })
@@ -59,22 +65,26 @@ export class PublicationRequestController {
     })
     publicationRequest: Omit<PublicationRequest, 'id'>,
   ): Promise<PublicationRequest> {
-    let publication = await this.publicationRepository.findById(publicationRequest.publicationId);
-    let company = await this.companyRepository.findById(publicationRequest.companyId);
+    let publication = await this.publicationRepository.findById(
+      publicationRequest.publicationId,
+    );
+    let company = await this.companyRepository.findById(
+      publicationRequest.companyId,
+    );
     let user = await this.userRepository.findOne({
       where: {
         personId: publication.personId,
-      }
+      },
     });
 
-    if(await this.publicationRequestRepository.find({
-      where: {
-        companyId: publicationRequest.companyId,
-        publicationId: publicationRequest.publicationId,
-      }
-    })){
-      throw new HttpErrors[400]('Ya has contactado esta publicacion');
-    }
+    // if(await this.publicationRequestRepository.find({
+    //   where: {
+    //     companyId: publicationRequest.companyId,
+    //     publicationId: publicationRequest.publicationId,
+    //   }
+    // })){
+    //   throw new HttpErrors[400]('Ya has contactado esta publicacion');
+    // }
 
     let mail = new EmailNotification({
       to: user?.email,
@@ -85,10 +95,10 @@ export class PublicationRequestController {
 
     let mailResponse = await this.notificationService.EmailNotification(mail);
 
-    if(mailResponse) {
-      console.log("Email send");
-    }else{
-      console.error("No se pudo enviar el email");
+    if (mailResponse) {
+      console.log('Email send');
+    } else {
+      console.error('No se pudo enviar el email');
     }
 
     return this.publicationRequestRepository.create(publicationRequest);
@@ -116,7 +126,9 @@ export class PublicationRequestController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(PublicationRequest, {includeRelations: true}),
+              items: getModelSchemaRef(PublicationRequest, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -148,7 +160,10 @@ export class PublicationRequestController {
     publicationRequest: PublicationRequest,
     @param.where(PublicationRequest) where?: Where<PublicationRequest>,
   ): Promise<Count> {
-    return this.publicationRequestRepository.updateAll(publicationRequest, where);
+    return this.publicationRequestRepository.updateAll(
+      publicationRequest,
+      where,
+    );
   }
 
   @get('/publication-request/{id}', {
@@ -157,7 +172,9 @@ export class PublicationRequestController {
         description: 'PublicationRequest model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(PublicationRequest, {includeRelations: true}),
+            schema: getModelSchemaRef(PublicationRequest, {
+              includeRelations: true,
+            }),
           },
         },
       },
@@ -165,7 +182,8 @@ export class PublicationRequestController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(PublicationRequest, {exclude: 'where'}) filter?: FilterExcludingWhere<PublicationRequest>
+    @param.filter(PublicationRequest, {exclude: 'where'})
+    filter?: FilterExcludingWhere<PublicationRequest>,
   ): Promise<PublicationRequest> {
     return this.publicationRequestRepository.findById(id, filter);
   }

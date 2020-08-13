@@ -1,7 +1,13 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import {
+  belongsTo,
+  Entity,
+  hasMany,
+  model,
+  property,
+} from '@loopback/repository';
+import {Category} from './category.model';
 import {Person} from './person.model';
 import {PublicationRequest} from './publication-request.model';
-import {Category} from './category.model';
 
 @model()
 export class Publication extends Entity {
@@ -35,6 +41,12 @@ export class Publication extends Entity {
     default: false,
   })
   status?: boolean;
+
+  @property({
+    type: 'string',
+    default: '',
+  })
+  publicationPicPath?: string;
 
   @belongsTo(() => Person)
   personId: string;
