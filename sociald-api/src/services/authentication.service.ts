@@ -2,7 +2,7 @@ import {bind, /* inject, */ BindingScope, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {generate as passGenerator} from 'generate-password';
 import {PasswordKeys as passKeys} from '../keys/password-keys';
-import {UserRepository} from '../repositories';
+import {UserRepository, UserCredentialsRepository} from '../repositories';
 import {genSalt, hash} from 'bcryptjs';
 
 const jwt_secret_key = 'IDONTKNOWYOU';
@@ -11,19 +11,19 @@ const jwt_secret_key = 'IDONTKNOWYOU';
 @bind({scope: BindingScope.TRANSIENT})
 export class AuthenticationService {
   constructor(
-    @repository(UserRepository)
-    public userRepository: UserRepository,
+    @repository(UserCredentialsRepository)
+    public userCredentialsRepository: UserCredentialsRepository,
   ) {}
 
   async ResetPassword(email: string): Promise<string | false> {
-    let user = await this.userRepository.findOne({where: {email: email}});
+    let credentials = await this.userCredentialsRepository.findOne({where: {email: email}});
 
-    if (user) {
+    if (credentials) {
       let randomPass = await this.GenerateRandomPassword();
       let encryptPassword = await hash(randomPass, await genSalt());
-      user.password = encryptPassword;
 
-      this.userRepository.updateById(user.id, user);
+      credentials.password = encryptPassword;
+      this.userCredentialsRepository.updateById(credentials.id, credentials);
 
       return randomPass;
     }

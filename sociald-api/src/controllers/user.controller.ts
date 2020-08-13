@@ -86,9 +86,7 @@ export class UserController {
     });
 
     if (user) {
-      let randomPassword = await this.authenticationService.ResetPassword(
-        data.email,
-      );
+      let randomPassword = await this.authenticationService.ResetPassword(data.email);
 
       if (randomPassword) {
         let notification = new EmailNotification({
