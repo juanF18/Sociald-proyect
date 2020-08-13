@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ServiceConfig } from '../config/service-config';
 import { Observable, BehaviorSubject, from } from 'rxjs';
 import { UserModel } from '../models/user.model';
+import { PasswordResetModel } from "../models/pasReset.mode";
 import * as JWT from 'jwt-decode';
 
 @Injectable({
@@ -43,6 +44,13 @@ export class SecurityService {
       headers: new HttpHeaders({}),
     });
   }
+
+  PasswordReset(data: PasswordResetModel):Observable<any>{
+    return this.http.post<any>(`${ServiceConfig.BASE_URL}password-reset`, data, {
+      headers: new HttpHeaders({})
+    })
+  }
+
   /**
    * save user data
    * @param session only save token
