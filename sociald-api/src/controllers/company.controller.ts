@@ -80,7 +80,6 @@ export class CompanyController {
     // Prepare the data of the user with the password encrypted
     const newUserData = {
       email: email,
-      password: encryptedPassword,
       username: savedCompany.name,
       role: role,
     };

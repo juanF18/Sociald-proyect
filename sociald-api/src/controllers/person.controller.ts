@@ -71,7 +71,6 @@ export class PersonController {
     // Prepare the data of the user with the password encrypted
     const newUserData = {
       email: email,
-      password: encryptedPassword,
       username: savedPerson.name,
       role: role,
     };
